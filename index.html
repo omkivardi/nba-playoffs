@@ -9,262 +9,133 @@
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a0f;
-    --card: #13131a;
-    --card2: #1a1a24;
-    --border: #2a2a3a;
-    --accent: #f97316;
-    --accent2: #3b82f6;
-    --gold: #fbbf24;
-    --text: #f0f0f5;
-    --muted: #6b7280;
-    --green: #22c55e;
-    --red: #ef4444;
+    --bg: #0a0a0f; --card: #13131a; --card2: #1a1a24; --border: #2a2a3a;
+    --accent: #f97316; --accent2: #3b82f6; --gold: #fbbf24;
+    --text: #f0f0f5; --muted: #6b7280; --green: #22c55e; --red: #ef4444;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'Heebo', sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+  body { background: var(--bg); color: var(--text); font-family: 'Heebo', sans-serif; min-height: 100vh; overflow-x: hidden; }
   body::before {
-    content: '';
-    position: fixed;
-    top: -50%; left: -50%;
-    width: 200%; height: 200%;
+    content: ''; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
     background: radial-gradient(ellipse at 60% 20%, rgba(249,115,22,0.06) 0%, transparent 50%),
                 radial-gradient(ellipse at 20% 80%, rgba(59,130,246,0.06) 0%, transparent 50%);
     pointer-events: none; z-index: 0;
   }
-
-  /* LOGIN */
-  #login-screen {
-    min-height: 100vh; display: flex; align-items: center;
-    justify-content: center; padding: 20px; position: relative; z-index: 1;
-  }
-  .login-box {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 24px; padding: 48px 40px; width: 100%; max-width: 400px; text-align: center;
-  }
+  #login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; position: relative; z-index: 1; }
+  .login-box { background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 48px 40px; width: 100%; max-width: 400px; text-align: center; }
   .login-logo { font-size: 64px; margin-bottom: 8px; }
   .login-title { font-family: 'Bebas Neue', cursive; font-size: 36px; letter-spacing: 3px; color: var(--accent); margin-bottom: 4px; }
   .login-sub { color: var(--muted); font-size: 14px; margin-bottom: 36px; }
   .input-group { margin-bottom: 16px; text-align: right; }
   .input-group label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
-  .input-group input {
-    width: 100%; background: var(--card2); border: 1px solid var(--border);
-    border-radius: 12px; padding: 14px 16px; color: var(--text);
-    font-family: 'Heebo', sans-serif; font-size: 15px; outline: none;
-    transition: border-color 0.2s; text-align: right;
-  }
+  .input-group input { width: 100%; background: var(--card2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; color: var(--text); font-family: 'Heebo', sans-serif; font-size: 15px; outline: none; transition: border-color 0.2s; text-align: right; }
   .input-group input:focus { border-color: var(--accent); }
-  .btn-primary {
-    width: 100%; background: var(--accent); color: white; border: none;
-    border-radius: 12px; padding: 16px; font-family: 'Heebo', sans-serif;
-    font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 8px; transition: all 0.2s;
-  }
+  .btn-primary { width: 100%; background: var(--accent); color: white; border: none; border-radius: 12px; padding: 16px; font-family: 'Heebo', sans-serif; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 8px; transition: all 0.2s; }
   .btn-primary:hover { background: #ea6a0a; transform: translateY(-1px); }
   .btn-primary:disabled { background: var(--muted); cursor: not-allowed; transform: none; }
   .error-msg { color: var(--red); font-size: 13px; margin-top: 12px; }
-
-  /* MAIN APP */
   #app { display: none; position: relative; z-index: 1; }
-
-  /* HEADER */
-  .header {
-    background: rgba(10,10,15,0.95); backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; padding: 0 16px;
-  }
-  .header-inner {
-    max-width: 600px; margin: 0 auto; display: flex;
-    align-items: center; justify-content: space-between; height: 56px;
-  }
+  .header { background: rgba(10,10,15,0.95); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; padding: 0 16px; }
+  .header-inner { max-width: 600px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
   .header-title { font-family: 'Bebas Neue', cursive; font-size: 22px; letter-spacing: 2px; color: var(--accent); }
-  .user-chip {
-    display: flex; align-items: center; gap: 8px; background: var(--card2);
-    border: 1px solid var(--border); border-radius: 20px; padding: 6px 12px; font-size: 13px; cursor: pointer;
-  }
-  .user-avatar {
-    width: 24px; height: 24px; background: var(--accent); border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white;
-  }
 
-  /* TABS */
-  .tabs {
-    background: var(--card); border-bottom: 1px solid var(--border);
-    position: sticky; top: 56px; z-index: 99;
-  }
-  .tabs-inner { max-width: 600px; margin: 0 auto; display: flex; }
-  .tab-btn {
-    flex: 1; background: none; border: none; color: var(--muted);
-    font-family: 'Heebo', sans-serif; font-size: 14px; font-weight: 500;
-    padding: 14px 8px; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s;
-  }
+  /* COUNTDOWN */
+  .countdown-bar { background: var(--card); border-bottom: 1px solid var(--border); padding: 8px 16px; }
+  .countdown-inner { max-width: 600px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: var(--muted); }
+  .countdown-label { font-weight: 600; }
+  .countdown-time { color: var(--accent); font-weight: 700; font-family: 'Bebas Neue', cursive; font-size: 16px; letter-spacing: 1px; }
+  .countdown-urgent { color: var(--red); }
+
+  .user-chip { display: flex; align-items: center; gap: 8px; background: var(--card2); border: 1px solid var(--border); border-radius: 20px; padding: 6px 12px; font-size: 13px; cursor: pointer; }
+  .user-avatar { width: 24px; height: 24px; background: var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; }
+  .tabs { background: var(--card); border-bottom: 1px solid var(--border); position: sticky; top: 56px; z-index: 99; overflow-x: auto; }
+  .tabs-inner { max-width: 600px; margin: 0 auto; display: flex; min-width: max-content; }
+  .tab-btn { flex: 1; background: none; border: none; color: var(--muted); font-family: 'Heebo', sans-serif; font-size: 13px; font-weight: 500; padding: 14px 10px; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
   .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
-
-  /* CONTENT */
   .content { max-width: 600px; margin: 0 auto; padding: 16px; }
-
-  /* ROUND HEADER */
   .round-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; margin-top: 20px; }
   .round-title { font-family: 'Bebas Neue', cursive; font-size: 28px; letter-spacing: 2px; color: var(--accent2); }
-
-  /* SERIES CARD */
-  .series-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 16px; padding: 16px; margin-bottom: 12px; transition: border-color 0.2s;
-  }
+  .series-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 12px; transition: border-color 0.2s; }
   .series-card.locked { opacity: 0.85; }
   .series-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
   .series-name { font-size: 12px; color: var(--muted); }
   .series-deadline { font-size: 11px; color: var(--accent); font-weight: 600; }
   .series-deadline.expired { color: var(--red); }
-
   .teams-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
-  .team-btn {
-    background: var(--card2); border: 2px solid var(--border); border-radius: 12px;
-    padding: 14px 10px; color: var(--text); font-family: 'Heebo', sans-serif;
-    font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: center;
-  }
+  .team-btn { background: var(--card2); border: 2px solid var(--border); border-radius: 12px; padding: 14px 10px; color: var(--text); font-family: 'Heebo', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: center; }
   .team-btn:hover:not(:disabled) { border-color: var(--accent); }
   .team-btn.selected { background: rgba(249,115,22,0.15); border-color: var(--accent); color: var(--accent); }
   .team-btn:disabled { cursor: not-allowed; }
   .team-btn.winner-correct { background: rgba(34,197,94,0.15); border-color: var(--green); color: var(--green); }
   .team-btn.winner-wrong { background: rgba(239,68,68,0.08); border-color: transparent; color: var(--muted); }
-
   .games-label { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
   .games-grid { display: flex; gap: 8px; }
-  .games-btn {
-    flex: 1; background: var(--card2); border: 2px solid var(--border); border-radius: 10px;
-    padding: 10px 6px; color: var(--text); font-family: 'Heebo', sans-serif;
-    font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s;
-  }
+  .games-btn { flex: 1; background: var(--card2); border: 2px solid var(--border); border-radius: 10px; padding: 10px 6px; color: var(--text); font-family: 'Heebo', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
   .games-btn:hover:not(:disabled) { border-color: var(--accent2); }
   .games-btn.selected { background: rgba(59,130,246,0.15); border-color: var(--accent2); color: var(--accent2); }
   .games-btn:disabled { cursor: not-allowed; }
   .games-btn.winner-correct { background: rgba(34,197,94,0.15); border-color: var(--green); color: var(--green); }
-
-  /* COMMUNITY PERCENTAGES */
   .community-section { margin-top: 12px; }
   .community-label { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
-  .pct-row { margin-bottom: 6px; }
+  .pct-row { margin-bottom: 8px; }
   .pct-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px; }
   .pct-bar-bg { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
   .pct-bar-fill { height: 100%; background: var(--accent2); border-radius: 2px; transition: width 0.6s ease; }
-
-  /* LOCKED NOTICE */
-  .locked-notice {
-    background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2);
-    border-radius: 10px; padding: 10px 14px; font-size: 12px; color: var(--red); margin-top: 10px; text-align: center;
-  }
-
-  /* POINTS BADGE */
-  .points-badge {
-    background: rgba(34,197,94,0.15); border: 1px solid var(--green);
-    color: var(--green); border-radius: 6px; padding: 2px 8px; font-size: 12px; font-weight: 700;
-  }
+  .pct-names { font-size: 11px; color: var(--muted); margin-top: 3px; }
+  .locked-notice { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); border-radius: 10px; padding: 10px 14px; font-size: 12px; color: var(--red); margin-top: 10px; text-align: center; }
+  .points-badge { background: rgba(34,197,94,0.15); border: 1px solid var(--green); color: var(--green); border-radius: 6px; padding: 2px 8px; font-size: 12px; font-weight: 700; }
   .points-badge.partial { background: rgba(251,191,36,0.15); border-color: var(--gold); color: var(--gold); }
-
-  /* LEADERBOARD */
   .leaderboard { padding-top: 8px; }
-  .lb-row {
-    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
-    padding: 14px 16px; margin-bottom: 8px; display: flex; align-items: center; gap: 14px;
-  }
+  .lb-row { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; margin-bottom: 8px; display: flex; align-items: center; gap: 14px; }
   .lb-row.me { border-color: var(--accent); background: rgba(249,115,22,0.05); }
   .lb-rank { font-family: 'Bebas Neue', cursive; font-size: 24px; color: var(--muted); width: 28px; text-align: center; flex-shrink: 0; }
-  .lb-rank.gold { color: var(--gold); }
-  .lb-rank.silver { color: #94a3b8; }
-  .lb-rank.bronze { color: #cd7c2f; }
+  .lb-rank.gold { color: var(--gold); } .lb-rank.silver { color: #94a3b8; } .lb-rank.bronze { color: #cd7c2f; }
   .lb-name-col { flex: 1; }
   .lb-name { font-weight: 600; font-size: 15px; }
   .lb-breakdown { font-size: 11px; color: var(--muted); }
   .lb-score { font-family: 'Bebas Neue', cursive; font-size: 28px; color: var(--accent); }
 
-  /* CHAMPION CARD */
-  .champ-card {
-    background: linear-gradient(135deg, rgba(251,191,36,0.1), rgba(249,115,22,0.05));
-    border: 1px solid rgba(251,191,36,0.3); border-radius: 16px; padding: 16px; margin-bottom: 16px;
-  }
-  .champ-title { font-family: 'Bebas Neue', cursive; font-size: 20px; color: var(--gold); margin-bottom: 12px; }
-  .champ-teams { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-  .champ-btn {
-    background: var(--card2); border: 2px solid var(--border); border-radius: 10px;
-    padding: 10px 6px; color: var(--text); font-family: 'Heebo', sans-serif;
-    font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: center;
-  }
-  .champ-btn.selected { background: rgba(251,191,36,0.15); border-color: var(--gold); color: var(--gold); }
-  .champ-btn:hover:not(:disabled) { border-color: var(--gold); }
-  .champ-btn:disabled { cursor: not-allowed; }
+  /* CHAMPION TAB */
+  .champ-deadline-banner { background: linear-gradient(135deg, rgba(251,191,36,0.15), rgba(249,115,22,0.1)); border: 1px solid rgba(251,191,36,0.3); border-radius: 14px; padding: 14px 16px; margin-bottom: 16px; text-align: center; }
+  .champ-deadline-title { font-family: 'Bebas Neue', cursive; font-size: 18px; color: var(--gold); margin-bottom: 4px; }
+  .champ-deadline-sub { font-size: 12px; color: var(--muted); }
+  .champ-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .champ-team-btn { background: var(--card); border: 2px solid var(--border); border-radius: 14px; padding: 14px 12px; cursor: pointer; transition: all 0.2s; text-align: center; font-family: 'Heebo', sans-serif; color: var(--text); }
+  .champ-team-btn:hover:not(:disabled) { border-color: var(--gold); }
+  .champ-team-btn.selected { background: rgba(251,191,36,0.15); border-color: var(--gold); }
+  .champ-team-btn:disabled { cursor: not-allowed; opacity: 0.7; }
+  .champ-team-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .champ-team-pts { font-size: 11px; color: var(--gold); font-weight: 600; }
+  .champ-team-pts.selected-pts { color: var(--gold); }
+  .champ-my-pick { background: rgba(251,191,36,0.1); border: 1px solid rgba(251,191,36,0.3); border-radius: 12px; padding: 12px 16px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+  .champ-winner-reveal { background: linear-gradient(135deg, rgba(34,197,94,0.15), rgba(251,191,36,0.1)); border: 1px solid var(--green); border-radius: 14px; padding: 16px; margin-bottom: 16px; text-align: center; }
 
-  /* ADMIN MODAL */
-  .admin-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-    z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px;
-  }
-  .admin-modal {
-    background: var(--card); border: 1px solid rgba(251,191,36,0.4);
-    border-radius: 20px; padding: 28px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto;
-  }
+  /* ADMIN */
+  .admin-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .admin-modal { background: var(--card); border: 1px solid rgba(251,191,36,0.4); border-radius: 20px; padding: 28px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; }
   .admin-modal-title { font-family: 'Bebas Neue', cursive; font-size: 24px; color: var(--gold); margin-bottom: 20px; }
   .admin-section-title { font-size: 13px; color: var(--muted); margin-bottom: 10px; margin-top: 18px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
   .admin-row { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
-  select, .admin-input {
-    background: var(--card2); border: 1px solid var(--border);
-    border-radius: 8px; padding: 10px 12px; color: var(--text);
-    font-family: 'Heebo', sans-serif; font-size: 13px; outline: none; flex: 1;
-  }
+  select, .admin-input { background: var(--card2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; color: var(--text); font-family: 'Heebo', sans-serif; font-size: 13px; outline: none; flex: 1; }
   select:focus, .admin-input:focus { border-color: var(--accent); }
-  .btn-admin {
-    background: var(--gold); color: #000; border: none; border-radius: 8px;
-    padding: 10px 16px; font-family: 'Heebo', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer;
-    white-space: nowrap;
-  }
+  .btn-admin { background: var(--gold); color: #000; border: none; border-radius: 8px; padding: 10px 16px; font-family: 'Heebo', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; }
   .btn-admin:hover { background: #f59e0b; }
-  .btn-admin.danger { background: var(--red); color: white; }
-  .btn-close {
-    background: var(--card2); color: var(--text); border: 1px solid var(--border);
-    border-radius: 8px; padding: 10px 16px; font-family: 'Heebo', sans-serif;
-    font-size: 13px; cursor: pointer; margin-top: 16px; width: 100%;
-  }
+  .btn-close { background: var(--card2); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 10px 16px; font-family: 'Heebo', sans-serif; font-size: 13px; cursor: pointer; margin-top: 16px; width: 100%; }
   .admin-success { color: var(--green); font-size: 12px; margin-top: 6px; }
   .admin-error { color: var(--red); font-size: 12px; margin-top: 6px; }
-
-  /* ADMIN BUTTON */
-  .admin-fab {
-    position: fixed; bottom: 24px; left: 24px; z-index: 150;
-    background: var(--gold); color: #000; border: none; border-radius: 50%;
-    width: 52px; height: 52px; font-size: 22px; cursor: pointer;
-    box-shadow: 0 4px 20px rgba(251,191,36,0.4); transition: transform 0.2s;
-  }
+  .admin-fab { position: fixed; bottom: 24px; left: 24px; z-index: 150; background: var(--gold); color: #000; border: none; border-radius: 50%; width: 52px; height: 52px; font-size: 22px; cursor: pointer; box-shadow: 0 4px 20px rgba(251,191,36,0.4); transition: transform 0.2s; }
   .admin-fab:hover { transform: scale(1.1); }
-
-  /* ADMIN LOGIN */
   .admin-login { text-align: center; }
-  .admin-login input {
-    width: 100%; background: var(--card2); border: 1px solid var(--border);
-    border-radius: 12px; padding: 14px 16px; color: var(--text);
-    font-family: 'Heebo', sans-serif; font-size: 15px; outline: none; margin-bottom: 12px;
-    text-align: center;
-  }
-
-  /* MISC */
+  .admin-login input { width: 100%; background: var(--card2); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; color: var(--text); font-family: 'Heebo', sans-serif; font-size: 15px; outline: none; margin-bottom: 12px; text-align: center; }
   .section-divider { height: 1px; background: var(--border); margin: 24px 0 8px; }
   .empty-state { text-align: center; color: var(--muted); padding: 40px 20px; font-size: 14px; }
   .loading { text-align: center; color: var(--muted); padding: 60px 20px; font-size: 14px; }
-  .spinner {
-    width: 32px; height: 32px; border: 3px solid var(--border);
-    border-top-color: var(--accent); border-radius: 50%;
-    animation: spin 0.8s linear infinite; margin: 0 auto 12px;
-  }
+  .spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
   @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-box">
     <div class="login-logo">🏀</div>
@@ -279,7 +150,6 @@
   </div>
 </div>
 
-<!-- APP -->
 <div id="app">
   <div class="header">
     <div class="header-inner">
@@ -291,72 +161,81 @@
       </div>
     </div>
   </div>
-
+  <div class="countdown-bar" id="countdown-bar" style="display:none">
+    <div class="countdown-inner">
+      <span class="countdown-label" id="countdown-label">דדליין הבא:</span>
+      <span class="countdown-time" id="countdown-time">--:--:--</span>
+    </div>
+  </div>
   <div class="tabs">
     <div class="tabs-inner">
       <button class="tab-btn active" onclick="switchTab('east')">🔵 מזרח</button>
       <button class="tab-btn" onclick="switchTab('west')">🔴 מערב</button>
       <button class="tab-btn" onclick="switchTab('finals')">🏆 גמר</button>
+      <button class="tab-btn" onclick="switchTab('champ')">👑 זוכה</button>
       <button class="tab-btn" onclick="switchTab('table')">📊 טבלה</button>
       <button class="tab-btn" onclick="switchTab('bets')">👁 הימורים</button>
     </div>
   </div>
-
   <div class="content" id="main-content">
     <div class="loading"><div class="spinner"></div>טוען נתונים...</div>
   </div>
 </div>
 
-<!-- ADMIN FAB -->
 <button class="admin-fab" id="admin-fab" onclick="openAdmin()" style="display:none">⚙️</button>
-
-<!-- ADMIN MODAL -->
 <div class="admin-overlay" id="admin-overlay" style="display:none" onclick="closeAdminIfOutside(event)">
-  <div class="admin-modal" id="admin-modal">
-    <!-- filled by JS -->
-  </div>
+  <div class="admin-modal" id="admin-modal"></div>
 </div>
 
 <script>
 const SUPABASE_URL = 'https://fvhhaulaswenwnxndvsd.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_eaFXoMmHnbA_-MoDKFiRuw_End-ICiK';
 const ADMIN_PASSWORD = 'Karinvardi2';
-
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// PLAYOFF STRUCTURE 2026 — ברירת מחדל (ניתן לעדכן מפאנל המנהל)
+// נקודות לפי קבוצה
+const CHAMP_POINTS = {
+  'Thunder': 3, 'Spurs': 6, 'Celtics': 6, 'Nuggets': 8, 'Cavaliers': 9,
+  'Knicks': 11, 'Pistons': 11, 'Rockets': 14, 'Timberwolves': 15,
+  'Hornets': 19, 'Hawks': 20, '76ers': 22, 'Magic': 23, 'Raptors': 23,
+  'Lakers': 23, 'Warriors': 26, 'Suns': 26, 'Trail Blazers': 27,
+  'Clippers': 27, 'Heat': 27
+};
+
+const CHAMP_TEAMS = [
+  'Thunder','Spurs','Celtics','Nuggets','Cavaliers','Knicks','Pistons',
+  'Rockets','Timberwolves','Hornets','Hawks','76ers','Magic','Raptors',
+  'Lakers','Warriors','Suns','Trail Blazers','Clippers','Heat'
+];
+
+// דדליין לזוכה
+const CHAMP_DEADLINE = '2026-04-20T03:00:00Z';
+
 const DEFAULT_SERIES = [
-  // EAST R1
   { id: 'e1s1', conf: 'east', round: 1, name: 'מזרח סדרה 1', team1: 'Pistons', team2: 'TBD (7/8)', deadline: '2026-04-20T03:00:00Z' },
   { id: 'e1s2', conf: 'east', round: 1, name: 'מזרח סדרה 2', team1: 'Cavaliers', team2: 'Raptors', deadline: '2026-04-20T03:00:00Z' },
   { id: 'e1s3', conf: 'east', round: 1, name: 'מזרח סדרה 3', team1: 'Knicks', team2: 'Hawks', deadline: '2026-04-20T03:00:00Z' },
   { id: 'e1s4', conf: 'east', round: 1, name: 'מזרח סדרה 4', team1: 'Celtics', team2: 'TBD (7/8)', deadline: '2026-04-20T03:00:00Z' },
-  // WEST R1
   { id: 'w1s1', conf: 'west', round: 1, name: 'מערב סדרה 1', team1: 'Thunder', team2: 'TBD (8/9)', deadline: '2026-04-20T03:00:00Z' },
   { id: 'w1s2', conf: 'west', round: 1, name: 'מערב סדרה 2', team1: 'Lakers', team2: 'Rockets', deadline: '2026-04-20T03:00:00Z' },
   { id: 'w1s3', conf: 'west', round: 1, name: 'מערב סדרה 3', team1: 'Nuggets', team2: 'Timberwolves', deadline: '2026-04-20T03:00:00Z' },
   { id: 'w1s4', conf: 'west', round: 1, name: 'מערב סדרה 4', team1: 'Spurs', team2: 'TBD (7/8)', deadline: '2026-04-20T03:00:00Z' },
-  // EAST R2
   { id: 'e2s1', conf: 'east', round: 2, name: 'מזרח סיבוב 2 — סדרה 1', team1: 'TBD', team2: 'TBD', deadline: null },
   { id: 'e2s2', conf: 'east', round: 2, name: 'מזרח סיבוב 2 — סדרה 2', team1: 'TBD', team2: 'TBD', deadline: null },
-  // WEST R2
   { id: 'w2s1', conf: 'west', round: 2, name: 'מערב סיבוב 2 — סדרה 1', team1: 'TBD', team2: 'TBD', deadline: null },
   { id: 'w2s2', conf: 'west', round: 2, name: 'מערב סיבוב 2 — סדרה 2', team1: 'TBD', team2: 'TBD', deadline: null },
-  // CONF FINALS
   { id: 'ecf', conf: 'east', round: 3, name: 'גמר מזרח', team1: 'TBD', team2: 'TBD', deadline: null },
   { id: 'wcf', conf: 'west', round: 3, name: 'גמר מערב', team1: 'TBD', team2: 'TBD', deadline: null },
-  // FINALS
   { id: 'nba_finals', conf: 'finals', round: 4, name: 'גמר NBA', team1: 'TBD', team2: 'TBD', deadline: null },
 ];
 
-let currentUser = null;
-let isAdmin = false;
-let currentTab = 'east';
-let allPicks = {};
-let communityPicks = {};
-let results = {};
+let currentUser = null, currentTab = 'east';
+let allPicks = {}, communityPicks = {}, results = {};
 let seriesData = DEFAULT_SERIES.map(s => ({...s}));
+let champPick = null, champResult = null, champCommunity = [];
+let adminAuthenticated = false;
+let countdownInterval = null;
 
 // ---- AUTH ----
 async function login() {
@@ -370,74 +249,118 @@ async function login() {
     { nickname, updated_at: new Date().toISOString() },
     { onConflict: 'nickname', ignoreDuplicates: false }
   ).select().single();
-  if (error) {
-    errEl.textContent = 'שגיאה: ' + error.message;
-    btn.disabled = false; btn.textContent = 'כניסה / הרשמה';
-    return;
-  }
+  if (error) { errEl.textContent = 'שגיאה: ' + error.message; btn.disabled = false; btn.textContent = 'כניסה / הרשמה'; return; }
   currentUser = { id: data.id, nickname: data.nickname };
   try { localStorage.setItem('nba_user', JSON.stringify(currentUser)); } catch(e) {}
   showApp();
 }
 
 function logout() {
-  currentUser = null; isAdmin = false;
+  currentUser = null;
   try { localStorage.removeItem('nba_user'); } catch(e) {}
+  if (countdownInterval) clearInterval(countdownInterval);
   document.getElementById('app').style.display = 'none';
   document.getElementById('admin-fab').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
 }
 
-// ---- INIT ----
 async function showApp() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
   document.getElementById('user-avatar').textContent = currentUser.nickname.charAt(0).toUpperCase();
   document.getElementById('user-name').textContent = currentUser.nickname;
+  document.getElementById('admin-fab').style.display = 'block';
   await loadAll();
+  startCountdown();
   renderTab();
 }
 
 async function loadAll() {
-  // Load series from DB
   const { data: dbSeries } = await db.from('series').select('*').order('round').order('id');
-  if (dbSeries && dbSeries.length > 0) {
-    seriesData = dbSeries;
-  }
+  if (dbSeries && dbSeries.length > 0) seriesData = dbSeries;
 
-  // Load my picks
   const { data: picks } = await db.from('picks').select('*').eq('user_id', currentUser.id);
   allPicks = {};
   if (picks) picks.forEach(p => { allPicks[p.series_id] = { winner: p.winner, games: p.games }; });
 
-  // Load results
   const { data: res } = await db.from('results').select('*');
   results = {};
-  if (res) res.forEach(r => { results[r.series_id] = { winner: r.winner, games: r.games }; });
+  if (res) res.forEach(r => {
+    if (r.series_id === 'champ') { champResult = r.winner; }
+    else { results[r.series_id] = { winner: r.winner, games: r.games }; }
+  });
 
-  // Load community picks for locked series
+  champPick = allPicks['champ']?.winner || null;
+
   await loadCommunityPicks();
 }
 
 async function loadCommunityPicks() {
   communityPicks = {};
-  const { data } = await db.from('picks').select('series_id, winner, games');
-  if (!data) return;
+  champCommunity = [];
+  const { data: picksData } = await db.from('picks').select('series_id, winner, games, user_id');
+  const { data: usersData } = await db.from('users').select('id, nickname');
+  if (!picksData) return;
+  const usersMap = {};
+  if (usersData) usersData.forEach(u => { usersMap[u.id] = u.nickname; });
+
   const maps = {};
-  data.forEach(p => {
+  picksData.forEach(p => {
     if (!p.winner) return;
+    if (p.series_id === 'champ') {
+      let entry = champCommunity.find(x => x.winner === p.winner);
+      if (!entry) { entry = { winner: p.winner, count: 0, names: [] }; champCommunity.push(entry); }
+      entry.count++;
+      const name = usersMap[p.user_id];
+      if (name) entry.names.push(name);
+      return;
+    }
+    const key = p.winner + '|||' + (p.games || '');
     if (!maps[p.series_id]) maps[p.series_id] = {};
-    if (!maps[p.series_id][p.winner]) maps[p.series_id][p.winner] = { winner: p.winner, count: 0 };
-    maps[p.series_id][p.winner].count++;
+    if (!maps[p.series_id][key]) maps[p.series_id][key] = { winner: p.winner, games: p.games, count: 0, names: [] };
+    maps[p.series_id][key].count++;
+    const name = usersMap[p.user_id];
+    if (name) maps[p.series_id][key].names.push(name);
   });
   Object.keys(maps).forEach(sid => { communityPicks[sid] = Object.values(maps[sid]); });
+}
+
+// ---- COUNTDOWN ----
+function startCountdown() {
+  if (countdownInterval) clearInterval(countdownInterval);
+  updateCountdown();
+  countdownInterval = setInterval(updateCountdown, 1000);
+}
+
+function updateCountdown() {
+  const now = new Date();
+  // Find next upcoming deadline
+  const upcoming = [...seriesData, { id: 'champ', deadline: CHAMP_DEADLINE, name: 'הימור זוכה' }]
+    .filter(s => s.deadline && now < new Date(s.deadline))
+    .sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+
+  const bar = document.getElementById('countdown-bar');
+  if (!upcoming.length) { bar.style.display = 'none'; return; }
+
+  const next = upcoming[0];
+  const diff = new Date(next.deadline) - now;
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  const timeStr = h > 0 ? `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}` : `${m}:${String(s).padStart(2,'0')}`;
+
+  bar.style.display = 'block';
+  document.getElementById('countdown-label').textContent = `⏱ דדליין הבא (${next.name}):`;
+  const timeEl = document.getElementById('countdown-time');
+  timeEl.textContent = timeStr;
+  timeEl.className = 'countdown-time' + (h < 1 ? ' countdown-urgent' : '');
 }
 
 // ---- TABS ----
 function switchTab(tab) {
   currentTab = tab;
   document.querySelectorAll('.tab-btn').forEach((b, i) => {
-    b.classList.toggle('active', ['east','west','finals','table','bets'][i] === tab);
+    b.classList.toggle('active', ['east','west','finals','champ','table','bets'][i] === tab);
   });
   renderTab();
 }
@@ -446,13 +369,9 @@ function renderTab() {
   const el = document.getElementById('main-content');
   if (currentTab === 'table') { renderTable(); return; }
   if (currentTab === 'bets') { renderBets(); return; }
+  if (currentTab === 'champ') { renderChamp(); return; }
   const conf = currentTab;
   let html = '';
-
-  if (conf === 'east' || conf === 'west') {
-    html += renderChampSection(conf);
-  }
-
   const rounds = [...new Set(seriesData.filter(s => s.conf === conf).map(s => s.round))].sort();
   for (const round of rounds) {
     const series = seriesData.filter(s => s.conf === conf && s.round === round);
@@ -461,64 +380,128 @@ function renderTab() {
     html += `<div class="round-header"><div class="round-title">${roundNames[round] || 'סיבוב ' + round}</div></div>`;
     for (const s of series) html += renderSeriesCard(s);
   }
-
   if (!html) html = '<div class="empty-state">אין סדרות עדיין</div>';
   el.innerHTML = html;
 }
 
-function renderChampSection(conf) {
-  const confName = conf === 'east' ? 'מזרח' : 'מערב';
-  const confTeams = seriesData
-    .filter(s => s.conf === conf && s.round === 1)
-    .flatMap(s => [s.team1, s.team2])
-    .filter(t => t && !t.startsWith('TBD'));
-  if (!confTeams.length) return '';
-  const champKey = 'champ_' + conf;
-  const myChamp = allPicks[champKey]?.winner;
-  const btns = confTeams.map(t => `
-    <button class="champ-btn ${myChamp === t ? 'selected' : ''}" onclick="pickChamp('${conf}','${t}')">
-      ${t}
-    </button>`).join('');
-  return `
-    <div class="champ-card">
-      <div class="champ-title">🏆 אלוף ${confName}</div>
-      <div class="champ-teams">${btns}</div>
-      ${myChamp ? `<div style="margin-top:10px;font-size:12px;color:var(--gold)">✓ בחרת: <b>${myChamp}</b></div>` : ''}
-    </div>`;
+// ---- CHAMP TAB ----
+function renderChamp() {
+  const el = document.getElementById('main-content');
+  const now = new Date();
+  const deadlinePassed = now > new Date(CHAMP_DEADLINE);
+  const dl = new Date(CHAMP_DEADLINE);
+  const dlStr = dl.toLocaleDateString('he-IL', { day: '2-digit', month: '2-digit' }) + ' ' + dl.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+
+  let html = '';
+
+  // Winner reveal
+  if (champResult) {
+    const pts = CHAMP_POINTS[champResult] || 0;
+    const won = champPick === champResult;
+    html += `
+      <div class="champ-winner-reveal">
+        <div style="font-size:32px;margin-bottom:8px">🏆</div>
+        <div style="font-family:'Bebas Neue',cursive;font-size:28px;color:var(--gold)">${champResult}</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:4px">אלופי NBA 2026</div>
+        ${won ? `<div style="margin-top:10px;color:var(--green);font-weight:700;font-size:16px">✓ ניחשת נכון! +${pts} נקודות</div>` : champPick ? `<div style="margin-top:10px;color:var(--muted);font-size:13px">הימרת על ${champPick}</div>` : ''}
+      </div>`;
+  }
+
+  // My pick
+  if (champPick) {
+    const pts = CHAMP_POINTS[champPick] || 0;
+    html += `
+      <div class="champ-my-pick">
+        <div>
+          <div style="font-size:11px;color:var(--muted);margin-bottom:2px">הניחוש שלך</div>
+          <div style="font-weight:700;font-size:15px">${champPick}</div>
+        </div>
+        <div style="color:var(--gold);font-family:'Bebas Neue',cursive;font-size:20px">${pts} נק' אם יזכה</div>
+      </div>`;
+  }
+
+  // Deadline banner
+  if (!deadlinePassed) {
+    html += `
+      <div class="champ-deadline-banner">
+        <div class="champ-deadline-title">🏆 מי יזכה ב-NBA 2026?</div>
+        <div class="champ-deadline-sub">דדליין: ${dlStr} — ${champPick ? 'שנה את הניחוש שלך' : 'בחר קבוצה'}</div>
+      </div>`;
+  }
+
+  // Teams grid
+  if (!deadlinePassed || !champResult) {
+    html += `<div class="champ-grid">`;
+    CHAMP_TEAMS.forEach(team => {
+      const pts = CHAMP_POINTS[team] || 0;
+      const isSelected = champPick === team;
+      html += `
+        <button class="champ-team-btn ${isSelected ? 'selected' : ''}" onclick="pickChampTeam('${team}')" ${deadlinePassed ? 'disabled' : ''}>
+          <div class="champ-team-name" style="${isSelected ? 'color:var(--gold)' : ''}">${team}</div>
+          <div class="champ-team-pts">🏆 ${pts} נקודות</div>
+        </button>`;
+    });
+    html += `</div>`;
+  }
+
+  // Community picks
+  if (champCommunity.length) {
+    const total = champCommunity.reduce((a, b) => a + b.count, 0);
+    const sorted = [...champCommunity].sort((a, b) => b.count - a.count);
+    html += `
+      <div class="community-section" style="margin-top:20px">
+        <div class="community-label">${deadlinePassed ? 'מי הימר מה' : 'ניחושי הקבוצה'} (${total} ניחושים)</div>
+        ${sorted.map(p => {
+          const pct = Math.round(p.count / total * 100);
+          const pts = CHAMP_POINTS[p.winner] || 0;
+          return `<div class="pct-row">
+            <div class="pct-header">
+              <span style="font-weight:600">${p.winner} <span style="color:var(--gold);font-size:11px">(${pts} נק')</span></span>
+              <span>${pct}% (${p.count})</span>
+            </div>
+            <div class="pct-bar-bg"><div class="pct-bar-fill" style="width:${pct}%"></div></div>
+            ${deadlinePassed ? `<div class="pct-names">${p.names.join(', ')}</div>` : ''}
+          </div>`;
+        }).join('')}
+      </div>`;
+  }
+
+  el.innerHTML = html || '<div class="empty-state">טוען...</div>';
 }
 
-async function pickChamp(conf, team) {
-  const champKey = 'champ_' + conf;
-  allPicks[champKey] = { winner: team, games: null };
-  renderTab();
+async function pickChampTeam(team) {
+  champPick = team;
+  allPicks['champ'] = { winner: team, games: null };
+  renderChamp();
   await db.from('picks').upsert({
-    user_id: currentUser.id, series_id: champKey,
+    user_id: currentUser.id, series_id: 'champ',
     winner: team, games: null, updated_at: new Date().toISOString()
   }, { onConflict: 'user_id,series_id' });
+  // Reload community
+  await loadCommunityPicks();
+  renderChamp();
 }
 
+// ---- SERIES CARD ----
 function renderSeriesCard(s) {
   const now = new Date();
-  const isLocked = !!results[s.id]; // נסגר רק כשיש תוצאה
+  const isLocked = !!results[s.id];
   const deadlinePassed = s.deadline && now > new Date(s.deadline);
   const hasResult = results[s.id];
   const myPick = allPicks[s.id];
   const isTBD = s.team1.startsWith('TBD') || s.team2.startsWith('TBD');
+  const canPick = !isLocked && !deadlinePassed && !isTBD;
 
   let deadlineStr = '';
   if (s.deadline) {
     const dl = new Date(s.deadline);
-    const d = dl.toLocaleDateString('he-IL', { day: '2-digit', month: '2-digit' });
-    const t = dl.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
-    deadlineStr = deadlinePassed ? `דדליין נסגר` : `דדליין: ${d} ${t}`;
+    deadlineStr = deadlinePassed ? 'דדליין נסגר' : `דדליין: ${dl.toLocaleDateString('he-IL',{day:'2-digit',month:'2-digit'})} ${dl.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'})}`;
   }
 
   let pointsBadge = '';
   if (hasResult && myPick) {
-    if (myPick.winner === hasResult.winner && myPick.games == hasResult.games)
-      pointsBadge = `<span class="points-badge">+5 נקודות ✓</span>`;
-    else if (myPick.winner === hasResult.winner)
-      pointsBadge = `<span class="points-badge partial">+3 נקודות</span>`;
+    if (myPick.winner === hasResult.winner && myPick.games == hasResult.games) pointsBadge = `<span class="points-badge">+5 ✓</span>`;
+    else if (myPick.winner === hasResult.winner) pointsBadge = `<span class="points-badge partial">+3</span>`;
   }
 
   let t1Class = 'team-btn', t2Class = 'team-btn';
@@ -531,35 +514,37 @@ function renderSeriesCard(s) {
 
   const teamsHtml = `
     <div class="teams-grid">
-      <button class="${t1Class}" onclick="pickTeam('${s.id}','${s.team1}')" ${isLocked||deadlinePassed||isTBD?'disabled':''}>${s.team1}</button>
-      <button class="${t2Class}" onclick="pickTeam('${s.id}','${s.team2}')" ${isLocked||deadlinePassed||isTBD?'disabled':''}>${s.team2}</button>
+      <button class="${t1Class}" onclick="pickTeam('${s.id}','${s.team1}')" ${!canPick?'disabled':''}>${s.team1}</button>
+      <button class="${t2Class}" onclick="pickTeam('${s.id}','${s.team2}')" ${!canPick?'disabled':''}>${s.team2}</button>
     </div>`;
 
   let gamesHtml = '';
   if (!isTBD) {
-    const gLabel = (isLocked||deadlinePassed) ? (myPick?.winner ? 'בחרת:' : '') : 'כמה משחקים?';
     gamesHtml = `
-      <div class="games-label">${gLabel}</div>
+      <div class="games-label">${isLocked ? (myPick?.winner ? 'בחרת:' : '') : 'כמה משחקים?'}</div>
       <div class="games-grid">
         ${[4,5,6,7].map(g => `
           <button class="games-btn ${myPick?.games==g?'selected':''} ${hasResult?.games==g?'winner-correct':''}"
-            onclick="pickGames('${s.id}',${g})" ${isLocked||deadlinePassed||!myPick?.winner?'disabled':''}>${g}</button>
+            onclick="pickGames('${s.id}',${g})" ${(isLocked||deadlinePassed||!myPick?.winner)?'disabled':''}>${g}</button>
         `).join('')}
       </div>`;
   }
 
-  // אחוזים — תמיד גלויים אם יש ניחושים
+  // Community
   let communityHtml = '';
   if (!isTBD && communityPicks[s.id]?.length) {
-    const total = communityPicks[s.id].reduce((a,b) => a + b.count, 0);
+    const total = communityPicks[s.id].reduce((a,b) => a+b.count, 0);
+    const sorted = [...communityPicks[s.id]].sort((a,b) => b.count-a.count);
     communityHtml = `
       <div class="community-section">
-        <div class="community-label">ניחושי הקבוצה (${total} ניחושים)</div>
-        ${communityPicks[s.id].sort((a,b) => b.count - a.count).map(p => {
-          const pct = Math.round(p.count / total * 100);
+        <div class="community-label">${deadlinePassed ? 'מי הימר מה' : 'ניחושי הקבוצה'} (${total})</div>
+        ${sorted.map(p => {
+          const pct = Math.round(p.count/total*100);
+          const gLabel = p.games ? ` (${p.games})` : '';
           return `<div class="pct-row">
-            <div class="pct-header"><span>${p.winner}</span><span>${pct}% (${p.count})</span></div>
+            <div class="pct-header"><span>${p.winner}${gLabel}</span><span>${pct}%</span></div>
             <div class="pct-bar-bg"><div class="pct-bar-fill" style="width:${pct}%"></div></div>
+            ${deadlinePassed ? `<div class="pct-names">${p.names.join(', ')}</div>` : ''}
           </div>`;
         }).join('')}
       </div>`;
@@ -567,31 +552,30 @@ function renderSeriesCard(s) {
 
   const lockedHtml = isTBD
     ? `<div class="locked-notice">⏳ ממתין לקביעת הקבוצות</div>`
-    : isLocked ? `<div class="locked-notice">🔒 ההימור נסגר — ${hasResult.winner} ניצחה ${hasResult.games}-${hasResult.games==4?0:hasResult.games==5?1:hasResult.games==6?2:3}</div>`
+    : isLocked ? `<div class="locked-notice">🔒 נסגר — ${hasResult.winner} ניצחה</div>`
     : deadlinePassed ? `<div class="locked-notice" style="border-color:rgba(249,115,22,0.3);color:var(--accent)">⏰ דדליין עבר — ממתין לתוצאה</div>` : '';
 
   return `
-    <div class="series-card ${isLocked?'locked':''}">
+    <div class="series-card ${(isLocked||deadlinePassed)?'locked':''}">
       <div class="series-meta">
-        <div>
-          <div class="series-name">${s.name}</div>
-          ${pointsBadge}
-        </div>
+        <div><div class="series-name">${s.name}</div>${pointsBadge}</div>
         <div class="series-deadline ${deadlinePassed?'expired':''}">${deadlineStr}</div>
       </div>
-      ${teamsHtml}
-      ${gamesHtml}
-      ${communityHtml}
-      ${lockedHtml}
+      ${teamsHtml}${gamesHtml}${communityHtml}${lockedHtml}
     </div>`;
 }
 
 async function pickTeam(seriesId, team) {
+  const s = seriesData.find(x => x.id === seriesId);
+  if (!s) return;
+  const now = new Date();
+  if (results[seriesId] || (s.deadline && now > new Date(s.deadline))) return;
   if (!allPicks[seriesId]) allPicks[seriesId] = {};
-  allPicks[seriesId].winner = team;
-  allPicks[seriesId].games = null;
+  allPicks[seriesId].winner = team; allPicks[seriesId].games = null;
   renderTab();
   await savePick(seriesId);
+  await loadCommunityPicks();
+  renderTab();
 }
 
 async function pickGames(seriesId, games) {
@@ -610,89 +594,6 @@ async function savePick(seriesId) {
   }, { onConflict: 'user_id,series_id' });
 }
 
-// ---- BETS VIEW ----
-async function renderBets() {
-  const el = document.getElementById('main-content');
-  el.innerHTML = '<div class="loading"><div class="spinner"></div>טוען הימורים...</div>';
-
-  const now = new Date();
-  const { data: users } = await db.from('users').select('*');
-  const { data: allPicksData } = await db.from('picks').select('*');
-  if (!users?.length) { el.innerHTML = '<div class="empty-state">אין שחקנים עדיין</div>'; return; }
-
-  // Only show series where deadline has passed
-  const lockedSeries = seriesData.filter(s => {
-    const deadlinePassed = s.deadline && now > new Date(s.deadline);
-    const hasResult = !!results[s.id];
-    return (deadlinePassed || hasResult) && !s.team1.startsWith('TBD') && !s.team2.startsWith('TBD');
-  });
-
-  if (!lockedSeries.length) {
-    el.innerHTML = '<div class="empty-state">ההימורים יוצגו לאחר סגירת הדדליין הראשון 🔒</div>';
-    return;
-  }
-
-  // Build picks map: userId -> seriesId -> pick
-  const picksMap = {};
-  (allPicksData || []).forEach(p => {
-    if (!picksMap[p.user_id]) picksMap[p.user_id] = {};
-    picksMap[p.user_id][p.series_id] = p;
-  });
-
-  const roundNames = { 1: 'סיבוב ראשון', 2: 'סיבוב שני', 3: 'גמר כנף', 4: 'גמר NBA' };
-
-  let html = '';
-
-  // Group locked series by round
-  const rounds = [...new Set(lockedSeries.map(s => s.round))].sort();
-  for (const round of rounds) {
-    const roundSeries = lockedSeries.filter(s => s.round === round);
-    html += `<div class="round-header"><div class="round-title">${roundNames[round] || 'סיבוב ' + round}</div></div>`;
-
-    for (const s of roundSeries) {
-      const res = results[s.id];
-      html += `
-        <div class="series-card" style="margin-bottom:16px">
-          <div class="series-meta">
-            <div class="series-name">${s.name}: <b style="color:var(--text)">${s.team1} vs ${s.team2}</b></div>
-            ${res ? `<div style="font-size:11px;color:var(--green);font-weight:700">✓ ${res.winner} (${res.games} משחקים)</div>` : ''}
-          </div>
-          <table style="width:100%;border-collapse:collapse;font-size:13px">
-            <thead>
-              <tr style="color:var(--muted);font-size:11px;border-bottom:1px solid var(--border)">
-                <th style="text-align:right;padding:6px 4px">שחקן</th>
-                <th style="text-align:center;padding:6px 4px">מנצח</th>
-                <th style="text-align:center;padding:6px 4px">משחקים</th>
-                <th style="text-align:center;padding:6px 4px">נקודות</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${users.map(u => {
-                const pick = picksMap[u.id]?.[s.id];
-                const isMe = u.id === currentUser.id;
-                let pts = '';
-                let winnerColor = 'var(--text)';
-                if (res && pick) {
-                  if (pick.winner === res.winner && pick.games == res.games) { pts = '+5 ✓'; winnerColor = 'var(--green)'; }
-                  else if (pick.winner === res.winner) { pts = '+3'; winnerColor = 'var(--gold)'; }
-                  else { pts = '0'; winnerColor = 'var(--muted)'; }
-                }
-                return `<tr style="border-bottom:1px solid rgba(255,255,255,0.05);${isMe?'background:rgba(249,115,22,0.05)':''}">
-                  <td style="padding:8px 4px;font-weight:${isMe?'700':'400'}">${u.nickname}${isMe?' 👤':''}</td>
-                  <td style="text-align:center;padding:8px 4px;color:${winnerColor}">${pick?.winner || '—'}</td>
-                  <td style="text-align:center;padding:8px 4px;color:var(--accent2)">${pick?.games ? pick.games + ' משחקים' : '—'}</td>
-                  <td style="text-align:center;padding:8px 4px;font-weight:700;color:${pts==='+5 ✓'?'var(--green)':pts==='+3'?'var(--gold)':'var(--muted)'}">${pts || '—'}</td>
-                </tr>`;
-              }).join('')}
-            </tbody>
-          </table>
-        </div>`;
-    }
-  }
-
-  el.innerHTML = html || '<div class="empty-state">אין נתונים להציג</div>';
-}
-
 // ---- TABLE ----
 async function renderTable() {
   const el = document.getElementById('main-content');
@@ -702,17 +603,26 @@ async function renderTable() {
   const { data: resData } = await db.from('results').select('*');
   if (!users?.length) { el.innerHTML = '<div class="empty-state">אין שחקנים עדיין</div>'; return; }
   const resultsMap = {};
-  if (resData) resData.forEach(r => resultsMap[r.series_id] = r);
+  if (resData) resData.forEach(r => { resultsMap[r.series_id] = r; });
+
   const scores = users.map(u => {
     const myPicks = (allPicksData||[]).filter(p => p.user_id === u.id);
-    let total = 0, exact = 0, winner = 0;
+    let total = 0, exact = 0, winner = 0, champBonus = 0;
     myPicks.forEach(p => {
+      if (p.series_id === 'champ') {
+        const champRes = resultsMap['champ'];
+        if (champRes && p.winner === champRes.winner) {
+          champBonus = CHAMP_POINTS[p.winner] || 0;
+          total += champBonus;
+        }
+        return;
+      }
       const r = resultsMap[p.series_id];
       if (!r) return;
       if (p.winner === r.winner && p.games == r.games) { total += 5; exact++; }
       else if (p.winner === r.winner) { total += 3; winner++; }
     });
-    return { ...u, total, exact, winner };
+    return { ...u, total, exact, winner, champBonus };
   }).sort((a,b) => b.total - a.total);
 
   let html = '<div class="leaderboard">';
@@ -725,7 +635,7 @@ async function renderTable() {
         <div class="lb-rank ${rankClass}">${rankEmoji}</div>
         <div class="lb-name-col">
           <div class="lb-name">${s.nickname} ${isMe?'(אתה)':''}</div>
-          <div class="lb-breakdown">${s.exact} מדויק ×5 + ${s.winner} מנצח ×3</div>
+          <div class="lb-breakdown">${s.exact} מדויק×5 + ${s.winner} מנצח×3${s.champBonus?` + זוכה×${s.champBonus}`:''}</div>
         </div>
         <div class="lb-score">${s.total}</div>
       </div>`;
@@ -734,25 +644,84 @@ async function renderTable() {
   el.innerHTML = html;
 }
 
-// ---- ADMIN ----
-let adminAuthenticated = false;
+// ---- BETS TAB ----
+async function renderBets() {
+  const el = document.getElementById('main-content');
+  el.innerHTML = '<div class="loading"><div class="spinner"></div>טוען הימורים...</div>';
+  const now = new Date();
+  const { data: users } = await db.from('users').select('*');
+  const { data: allPicksData } = await db.from('picks').select('*');
+  if (!users?.length) { el.innerHTML = '<div class="empty-state">אין שחקנים עדיין</div>'; return; }
 
+  const lockedSeries = seriesData.filter(s => {
+    const deadlinePassed = s.deadline && now > new Date(s.deadline);
+    return (deadlinePassed || !!results[s.id]) && !s.team1.startsWith('TBD') && !s.team2.startsWith('TBD');
+  });
+
+  if (!lockedSeries.length) {
+    el.innerHTML = '<div class="empty-state">🔒 ההימורים יוצגו לאחר סגירת הדדליין הראשון</div>';
+    return;
+  }
+
+  const picksMap = {};
+  (allPicksData||[]).forEach(p => {
+    if (!picksMap[p.user_id]) picksMap[p.user_id] = {};
+    picksMap[p.user_id][p.series_id] = p;
+  });
+
+  const roundNames = { 1: 'סיבוב ראשון', 2: 'סיבוב שני', 3: 'גמר כנף', 4: 'גמר NBA' };
+  let html = '';
+  const rounds = [...new Set(lockedSeries.map(s => s.round))].sort();
+  for (const round of rounds) {
+    const roundSeries = lockedSeries.filter(s => s.round === round);
+    html += `<div class="round-header"><div class="round-title">${roundNames[round]||'סיבוב '+round}</div></div>`;
+    for (const s of roundSeries) {
+      const res = results[s.id];
+      html += `
+        <div class="series-card" style="margin-bottom:16px">
+          <div class="series-meta">
+            <div class="series-name">${s.name}: <b style="color:var(--text)">${s.team1} vs ${s.team2}</b></div>
+            ${res?`<div style="font-size:11px;color:var(--green);font-weight:700">✓ ${res.winner} (${res.games} משחקים)</div>`:''}
+          </div>
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead><tr style="color:var(--muted);font-size:11px;border-bottom:1px solid var(--border)">
+              <th style="text-align:right;padding:6px 4px">שחקן</th>
+              <th style="text-align:center;padding:6px 4px">מנצח</th>
+              <th style="text-align:center;padding:6px 4px">משחקים</th>
+              <th style="text-align:center;padding:6px 4px">נקודות</th>
+            </tr></thead>
+            <tbody>
+              ${users.map(u => {
+                const pick = picksMap[u.id]?.[s.id];
+                const isMe = u.id === currentUser.id;
+                let pts = '—', ptColor = 'var(--muted)';
+                if (res && pick) {
+                  if (pick.winner===res.winner && pick.games==res.games) { pts='+5 ✓'; ptColor='var(--green)'; }
+                  else if (pick.winner===res.winner) { pts='+3'; ptColor='var(--gold)'; }
+                  else { pts='0'; ptColor='var(--muted)'; }
+                }
+                return `<tr style="border-bottom:1px solid rgba(255,255,255,0.05);${isMe?'background:rgba(249,115,22,0.05)':''}">
+                  <td style="padding:8px 4px;font-weight:${isMe?700:400}">${u.nickname}${isMe?' 👤':''}</td>
+                  <td style="text-align:center;padding:8px 4px">${pick?.winner||'—'}</td>
+                  <td style="text-align:center;padding:8px 4px;color:var(--accent2)">${pick?.games?pick.games+' משחקים':'—'}</td>
+                  <td style="text-align:center;padding:8px 4px;font-weight:700;color:${ptColor}">${pts}</td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>`;
+    }
+  }
+  el.innerHTML = html || '<div class="empty-state">אין נתונים</div>';
+}
+
+// ---- ADMIN ----
 function openAdmin() {
   document.getElementById('admin-overlay').style.display = 'flex';
-  if (!adminAuthenticated) {
-    renderAdminLogin();
-  } else {
-    renderAdminPanel();
-  }
+  adminAuthenticated ? renderAdminPanel() : renderAdminLogin();
 }
-
-function closeAdmin() {
-  document.getElementById('admin-overlay').style.display = 'none';
-}
-
-function closeAdminIfOutside(e) {
-  if (e.target === document.getElementById('admin-overlay')) closeAdmin();
-}
+function closeAdmin() { document.getElementById('admin-overlay').style.display = 'none'; }
+function closeAdminIfOutside(e) { if (e.target === document.getElementById('admin-overlay')) closeAdmin(); }
 
 function renderAdminLogin() {
   document.getElementById('admin-modal').innerHTML = `
@@ -767,44 +736,32 @@ function renderAdminLogin() {
 }
 
 function verifyAdminPass() {
-  const val = document.getElementById('admin-pass-input').value;
-  if (val === ADMIN_PASSWORD) {
-    adminAuthenticated = true;
-    renderAdminPanel();
-  } else {
-    document.getElementById('admin-pass-error').textContent = 'סיסמה שגויה';
-  }
+  if (document.getElementById('admin-pass-input').value === ADMIN_PASSWORD) {
+    adminAuthenticated = true; renderAdminPanel();
+  } else { document.getElementById('admin-pass-error').textContent = 'סיסמה שגויה'; }
 }
 
 function renderAdminPanel() {
   const seriesOptions = seriesData.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
-  const seriesOptionsForEdit = seriesData.map(s => `<option value="${s.id}">${s.name} (${s.team1} vs ${s.team2})</option>`).join('');
-
+  const seriesOptionsEdit = seriesData.map(s => `<option value="${s.id}">${s.name} (${s.team1} vs ${s.team2})</option>`).join('');
   document.getElementById('admin-modal').innerHTML = `
     <div class="admin-modal-title">⚙️ פאנל מנהל</div>
-
-    <!-- הכנסת תוצאה -->
     <div class="admin-section-title">📋 הכנסת תוצאה לסדרה</div>
+    <div class="admin-row"><select id="res-series">${seriesOptions}</select></div>
     <div class="admin-row">
-      <select id="res-series">${seriesOptions}</select>
-    </div>
-    <div class="admin-row">
-      <input class="admin-input" id="res-winner" placeholder="קבוצה מנצחת (כמו בכרטיס)">
-      <select id="res-games">
-        <option value="4">4-0</option>
-        <option value="5">4-1</option>
-        <option value="6">4-2</option>
-        <option value="7">4-3</option>
-      </select>
+      <input class="admin-input" id="res-winner" placeholder="קבוצה מנצחת">
+      <select id="res-games"><option value="4">4-0</option><option value="5">4-1</option><option value="6">4-2</option><option value="7">4-3</option></select>
       <button class="btn-admin" onclick="submitResult()">שמור</button>
     </div>
     <div id="res-msg"></div>
-
-    <!-- עדכון קבוצות -->
-    <div class="admin-section-title" style="margin-top:24px">✏️ עדכון קבוצות בסדרה</div>
+    <div class="admin-section-title" style="margin-top:20px">🏆 זוכה NBA</div>
     <div class="admin-row">
-      <select id="edit-series">${seriesOptionsForEdit}</select>
+      <input class="admin-input" id="champ-winner" placeholder="קבוצה זוכה">
+      <button class="btn-admin" onclick="submitChampResult()">שמור</button>
     </div>
+    <div id="champ-msg"></div>
+    <div class="admin-section-title" style="margin-top:20px">✏️ עדכון קבוצות בסדרה</div>
+    <div class="admin-row"><select id="edit-series" onchange="fillEditFields()">${seriesOptionsEdit}</select></div>
     <div class="admin-row">
       <input class="admin-input" id="edit-team1" placeholder="קבוצה 1">
       <input class="admin-input" id="edit-team2" placeholder="קבוצה 2">
@@ -814,25 +771,16 @@ function renderAdminPanel() {
       <button class="btn-admin" onclick="updateSeries()">עדכן</button>
     </div>
     <div id="edit-msg"></div>
+    <button class="btn-close" onclick="closeAdmin()">סגור</button>`;
+  fillEditFields();
+}
 
-    <button class="btn-close" onclick="closeAdmin()">סגור</button>
-  `;
-
-  // Auto-fill when series is selected
-  document.getElementById('edit-series').addEventListener('change', function() {
-    const s = seriesData.find(x => x.id === this.value);
-    if (!s) return;
-    document.getElementById('edit-team1').value = s.team1 || '';
-    document.getElementById('edit-team2').value = s.team2 || '';
-    document.getElementById('edit-deadline').value = s.deadline || '';
-  });
-  // Trigger initial fill
-  const firstSeries = seriesData[0];
-  if (firstSeries) {
-    document.getElementById('edit-team1').value = firstSeries.team1 || '';
-    document.getElementById('edit-team2').value = firstSeries.team2 || '';
-    document.getElementById('edit-deadline').value = firstSeries.deadline || '';
-  }
+function fillEditFields() {
+  const s = seriesData.find(x => x.id === document.getElementById('edit-series')?.value);
+  if (!s) return;
+  document.getElementById('edit-team1').value = s.team1 || '';
+  document.getElementById('edit-team2').value = s.team2 || '';
+  document.getElementById('edit-deadline').value = s.deadline || '';
 }
 
 async function submitResult() {
@@ -841,14 +789,21 @@ async function submitResult() {
   const games = parseInt(document.getElementById('res-games').value);
   const msgEl = document.getElementById('res-msg');
   if (!winner) { msgEl.innerHTML = '<div class="admin-error">נא להכניס קבוצה מנצחת</div>'; return; }
-
-  const { error } = await db.from('results').upsert({
-    series_id: seriesId, winner, games, updated_at: new Date().toISOString()
-  }, { onConflict: 'series_id' });
-
+  const { error } = await db.from('results').upsert({ series_id: seriesId, winner, games, updated_at: new Date().toISOString() }, { onConflict: 'series_id' });
   if (error) { msgEl.innerHTML = `<div class="admin-error">שגיאה: ${error.message}</div>`; return; }
   results[seriesId] = { winner, games };
   msgEl.innerHTML = '<div class="admin-success">✓ תוצאה נשמרה!</div>';
+  renderTab();
+}
+
+async function submitChampResult() {
+  const winner = document.getElementById('champ-winner').value.trim();
+  const msgEl = document.getElementById('champ-msg');
+  if (!winner) { msgEl.innerHTML = '<div class="admin-error">נא להכניס קבוצה זוכה</div>'; return; }
+  const { error } = await db.from('results').upsert({ series_id: 'champ', winner, games: null, updated_at: new Date().toISOString() }, { onConflict: 'series_id' });
+  if (error) { msgEl.innerHTML = `<div class="admin-error">שגיאה: ${error.message}</div>`; return; }
+  champResult = winner;
+  msgEl.innerHTML = '<div class="admin-success">✓ זוכה נשמר!</div>';
   renderTab();
 }
 
@@ -859,21 +814,11 @@ async function updateSeries() {
   const deadline = document.getElementById('edit-deadline').value.trim() || null;
   const msgEl = document.getElementById('edit-msg');
   if (!team1 || !team2) { msgEl.innerHTML = '<div class="admin-error">נא להכניס שתי קבוצות</div>'; return; }
-
-  // Update in DB
-  const { error } = await db.from('series').upsert({
-    id: seriesId,
-    ...seriesData.find(s => s.id === seriesId),
-    team1, team2, deadline,
-    updated_at: new Date().toISOString()
-  }, { onConflict: 'id' });
-
+  const orig = seriesData.find(s => s.id === seriesId);
+  const { error } = await db.from('series').upsert({ ...orig, id: seriesId, team1, team2, deadline, updated_at: new Date().toISOString() }, { onConflict: 'id' });
   if (error) { msgEl.innerHTML = `<div class="admin-error">שגיאה: ${error.message}</div>`; return; }
-
-  // Update local
   const idx = seriesData.findIndex(s => s.id === seriesId);
   if (idx >= 0) { seriesData[idx].team1 = team1; seriesData[idx].team2 = team2; seriesData[idx].deadline = deadline; }
-
   msgEl.innerHTML = '<div class="admin-success">✓ סדרה עודכנה!</div>';
   renderTab();
 }
@@ -881,23 +826,7 @@ async function updateSeries() {
 // ---- INIT ----
 window.onload = function() {
   const saved = localStorage.getItem('nba_user');
-  if (saved) {
-    try {
-      currentUser = JSON.parse(saved);
-      showApp().then(() => {
-        document.getElementById('admin-fab').style.display = 'block';
-      });
-      return;
-    } catch(e) {}
-  }
-  // Show admin FAB always (user will need password)
-};
-
-// Show admin FAB after login
-const origShowApp = showApp;
-showApp = async function() {
-  await origShowApp.call(this);
-  document.getElementById('admin-fab').style.display = 'block';
+  if (saved) { try { currentUser = JSON.parse(saved); showApp(); } catch(e) {} }
 };
 </script>
 </body>
