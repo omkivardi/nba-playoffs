@@ -32,88 +32,38 @@
   body::before {
     content: '';
     position: fixed;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
     background: radial-gradient(ellipse at 60% 20%, rgba(249,115,22,0.06) 0%, transparent 50%),
                 radial-gradient(ellipse at 20% 80%, rgba(59,130,246,0.06) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
+    pointer-events: none; z-index: 0;
   }
 
   /* LOGIN */
   #login-screen {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    position: relative;
-    z-index: 1;
+    min-height: 100vh; display: flex; align-items: center;
+    justify-content: center; padding: 20px; position: relative; z-index: 1;
   }
   .login-box {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 48px 40px;
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 24px; padding: 48px 40px; width: 100%; max-width: 400px; text-align: center;
   }
-  .login-logo {
-    font-size: 64px;
-    margin-bottom: 8px;
-  }
-  .login-title {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 36px;
-    letter-spacing: 3px;
-    color: var(--accent);
-    margin-bottom: 4px;
-  }
-  .login-sub {
-    color: var(--muted);
-    font-size: 14px;
-    margin-bottom: 36px;
-  }
-  .input-group {
-    margin-bottom: 16px;
-    text-align: right;
-  }
-  .input-group label {
-    display: block;
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
+  .login-logo { font-size: 64px; margin-bottom: 8px; }
+  .login-title { font-family: 'Bebas Neue', cursive; font-size: 36px; letter-spacing: 3px; color: var(--accent); margin-bottom: 4px; }
+  .login-sub { color: var(--muted); font-size: 14px; margin-bottom: 36px; }
+  .input-group { margin-bottom: 16px; text-align: right; }
+  .input-group label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
   .input-group input {
-    width: 100%;
-    background: var(--card2);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 16px;
-    color: var(--text);
-    font-family: 'Heebo', sans-serif;
-    font-size: 15px;
-    outline: none;
-    transition: border-color 0.2s;
-    text-align: right;
+    width: 100%; background: var(--card2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 16px; color: var(--text);
+    font-family: 'Heebo', sans-serif; font-size: 15px; outline: none;
+    transition: border-color 0.2s; text-align: right;
   }
   .input-group input:focus { border-color: var(--accent); }
   .btn-primary {
-    width: 100%;
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 16px;
-    font-family: 'Heebo', sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 8px;
-    transition: all 0.2s;
+    width: 100%; background: var(--accent); color: white; border: none;
+    border-radius: 12px; padding: 16px; font-family: 'Heebo', sans-serif;
+    font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 8px; transition: all 0.2s;
   }
   .btn-primary:hover { background: #ea6a0a; transform: translateY(-1px); }
   .btn-primary:disabled { background: var(--muted); cursor: not-allowed; transform: none; }
@@ -124,417 +74,192 @@
 
   /* HEADER */
   .header {
-    background: rgba(10,10,15,0.95);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    padding: 0 16px;
+    background: rgba(10,10,15,0.95); backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; padding: 0 16px;
   }
   .header-inner {
-    max-width: 600px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 56px;
+    max-width: 600px; margin: 0 auto; display: flex;
+    align-items: center; justify-content: space-between; height: 56px;
   }
-  .header-title {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 22px;
-    letter-spacing: 2px;
-    color: var(--accent);
-  }
+  .header-title { font-family: 'Bebas Neue', cursive; font-size: 22px; letter-spacing: 2px; color: var(--accent); }
   .user-chip {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--card2);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 6px 12px;
-    font-size: 13px;
-    cursor: pointer;
+    display: flex; align-items: center; gap: 8px; background: var(--card2);
+    border: 1px solid var(--border); border-radius: 20px; padding: 6px 12px; font-size: 13px; cursor: pointer;
   }
   .user-avatar {
-    width: 24px;
-    height: 24px;
-    background: var(--accent);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 700;
-    color: white;
+    width: 24px; height: 24px; background: var(--accent); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white;
   }
 
   /* TABS */
   .tabs {
-    background: var(--card);
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 56px;
-    z-index: 99;
+    background: var(--card); border-bottom: 1px solid var(--border);
+    position: sticky; top: 56px; z-index: 99;
   }
-  .tabs-inner {
-    max-width: 600px;
-    margin: 0 auto;
-    display: flex;
-  }
+  .tabs-inner { max-width: 600px; margin: 0 auto; display: flex; }
   .tab-btn {
-    flex: 1;
-    background: none;
-    border: none;
-    color: var(--muted);
-    font-family: 'Heebo', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    padding: 14px 8px;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: all 0.2s;
+    flex: 1; background: none; border: none; color: var(--muted);
+    font-family: 'Heebo', sans-serif; font-size: 14px; font-weight: 500;
+    padding: 14px 8px; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s;
   }
-  .tab-btn.active {
-    color: var(--accent);
-    border-bottom-color: var(--accent);
-  }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
 
   /* CONTENT */
-  .content {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 16px;
-  }
+  .content { max-width: 600px; margin: 0 auto; padding: 16px; }
 
   /* ROUND HEADER */
-  .round-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-    margin-top: 20px;
-  }
-  .round-title {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 28px;
-    letter-spacing: 2px;
-    color: var(--accent2);
-  }
-  .round-deadline {
-    font-size: 11px;
-    color: var(--muted);
-    text-align: left;
-  }
-  .round-deadline span { color: var(--green); font-weight: 600; }
+  .round-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; margin-top: 20px; }
+  .round-title { font-family: 'Bebas Neue', cursive; font-size: 28px; letter-spacing: 2px; color: var(--accent2); }
 
   /* SERIES CARD */
   .series-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 12px;
-    transition: border-color 0.2s;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 16px; margin-bottom: 12px; transition: border-color 0.2s;
   }
-  .series-card.locked { opacity: 0.7; }
-  .series-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 14px;
-  }
+  .series-card.locked { opacity: 0.85; }
+  .series-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
   .series-name { font-size: 12px; color: var(--muted); }
-  .series-deadline {
-    font-size: 11px;
-    color: var(--accent);
-    font-weight: 600;
-  }
+  .series-deadline { font-size: 11px; color: var(--accent); font-weight: 600; }
   .series-deadline.expired { color: var(--red); }
 
-  .teams-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin-bottom: 14px;
-  }
+  .teams-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
   .team-btn {
-    background: var(--card2);
-    border: 2px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 10px;
-    color: var(--text);
-    font-family: 'Heebo', sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
+    background: var(--card2); border: 2px solid var(--border); border-radius: 12px;
+    padding: 14px 10px; color: var(--text); font-family: 'Heebo', sans-serif;
+    font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: center;
   }
   .team-btn:hover:not(:disabled) { border-color: var(--accent); }
-  .team-btn.selected {
-    background: rgba(249,115,22,0.15);
-    border-color: var(--accent);
-    color: var(--accent);
-  }
+  .team-btn.selected { background: rgba(249,115,22,0.15); border-color: var(--accent); color: var(--accent); }
   .team-btn:disabled { cursor: not-allowed; }
-  .team-btn.winner-correct {
-    background: rgba(34,197,94,0.15);
-    border-color: var(--green);
-    color: var(--green);
-  }
-  .team-btn.winner-wrong {
-    background: rgba(239,68,68,0.08);
-    border-color: transparent;
-    color: var(--muted);
-  }
+  .team-btn.winner-correct { background: rgba(34,197,94,0.15); border-color: var(--green); color: var(--green); }
+  .team-btn.winner-wrong { background: rgba(239,68,68,0.08); border-color: transparent; color: var(--muted); }
 
   .games-label { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
-  .games-grid {
-    display: flex;
-    gap: 8px;
-  }
+  .games-grid { display: flex; gap: 8px; }
   .games-btn {
-    flex: 1;
-    background: var(--card2);
-    border: 2px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 6px;
-    color: var(--text);
-    font-family: 'Heebo', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
+    flex: 1; background: var(--card2); border: 2px solid var(--border); border-radius: 10px;
+    padding: 10px 6px; color: var(--text); font-family: 'Heebo', sans-serif;
+    font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s;
   }
   .games-btn:hover:not(:disabled) { border-color: var(--accent2); }
-  .games-btn.selected {
-    background: rgba(59,130,246,0.15);
-    border-color: var(--accent2);
-    color: var(--accent2);
-  }
+  .games-btn.selected { background: rgba(59,130,246,0.15); border-color: var(--accent2); color: var(--accent2); }
   .games-btn:disabled { cursor: not-allowed; }
-
-  .save-btn {
-    width: 100%;
-    margin-top: 14px;
-    background: var(--accent);
-    color: white;
-    border: none;
-    border-radius: 10px;
-    padding: 12px;
-    font-family: 'Heebo', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .save-btn:hover { background: #ea6a0a; }
-  .save-btn:disabled { background: var(--muted); cursor: not-allowed; }
-  .save-btn.saved {
-    background: var(--green);
-    color: white;
-  }
+  .games-btn.winner-correct { background: rgba(34,197,94,0.15); border-color: var(--green); color: var(--green); }
 
   /* COMMUNITY PERCENTAGES */
   .community-section { margin-top: 12px; }
   .community-label { font-size: 11px; color: var(--muted); margin-bottom: 8px; }
-  .pct-row {
-    margin-bottom: 6px;
-  }
-  .pct-header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    margin-bottom: 3px;
-  }
-  .pct-bar-bg {
-    height: 4px;
-    background: var(--border);
-    border-radius: 2px;
-    overflow: hidden;
-  }
-  .pct-bar-fill {
-    height: 100%;
-    background: var(--accent2);
-    border-radius: 2px;
-    transition: width 0.6s ease;
-  }
+  .pct-row { margin-bottom: 6px; }
+  .pct-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 3px; }
+  .pct-bar-bg { height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .pct-bar-fill { height: 100%; background: var(--accent2); border-radius: 2px; transition: width 0.6s ease; }
 
   /* LOCKED NOTICE */
   .locked-notice {
-    background: rgba(239,68,68,0.08);
-    border: 1px solid rgba(239,68,68,0.2);
-    border-radius: 10px;
-    padding: 10px 14px;
-    font-size: 12px;
-    color: var(--red);
-    margin-top: 10px;
-    text-align: center;
+    background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2);
+    border-radius: 10px; padding: 10px 14px; font-size: 12px; color: var(--red); margin-top: 10px; text-align: center;
   }
+
+  /* POINTS BADGE */
+  .points-badge {
+    background: rgba(34,197,94,0.15); border: 1px solid var(--green);
+    color: var(--green); border-radius: 6px; padding: 2px 8px; font-size: 12px; font-weight: 700;
+  }
+  .points-badge.partial { background: rgba(251,191,36,0.15); border-color: var(--gold); color: var(--gold); }
 
   /* LEADERBOARD */
   .leaderboard { padding-top: 8px; }
   .lb-row {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 14px 16px;
-    margin-bottom: 8px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
+    background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 14px 16px; margin-bottom: 8px; display: flex; align-items: center; gap: 14px;
   }
   .lb-row.me { border-color: var(--accent); background: rgba(249,115,22,0.05); }
-  .lb-rank {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 24px;
-    color: var(--muted);
-    width: 28px;
-    text-align: center;
-    flex-shrink: 0;
-  }
+  .lb-rank { font-family: 'Bebas Neue', cursive; font-size: 24px; color: var(--muted); width: 28px; text-align: center; flex-shrink: 0; }
   .lb-rank.gold { color: var(--gold); }
   .lb-rank.silver { color: #94a3b8; }
   .lb-rank.bronze { color: #cd7c2f; }
-  .lb-name { flex: 1; font-weight: 600; font-size: 15px; }
-  .lb-score {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 28px;
-    color: var(--accent);
-  }
+  .lb-name-col { flex: 1; }
+  .lb-name { font-weight: 600; font-size: 15px; }
   .lb-breakdown { font-size: 11px; color: var(--muted); }
+  .lb-score { font-family: 'Bebas Neue', cursive; font-size: 28px; color: var(--accent); }
 
-  /* ADMIN */
-  .admin-section {
-    background: var(--card);
-    border: 1px solid rgba(251,191,36,0.3);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 16px;
-  }
-  .admin-title {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 20px;
-    color: var(--gold);
-    margin-bottom: 14px;
-  }
-  .admin-row {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    margin-bottom: 10px;
-    flex-wrap: wrap;
-  }
-  .admin-label { font-size: 13px; flex: 1; min-width: 120px; }
-  select, .admin-input {
-    background: var(--card2);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 8px 10px;
-    color: var(--text);
-    font-family: 'Heebo', sans-serif;
-    font-size: 13px;
-    outline: none;
-  }
-  .btn-small {
-    background: var(--gold);
-    color: #000;
-    border: none;
-    border-radius: 8px;
-    padding: 8px 14px;
-    font-family: 'Heebo', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-  }
-
-  /* EMPTY */
-  .empty-state {
-    text-align: center;
-    color: var(--muted);
-    padding: 40px 20px;
-    font-size: 14px;
-  }
-
-  /* LOADING */
-  .loading {
-    text-align: center;
-    color: var(--muted);
-    padding: 60px 20px;
-    font-size: 14px;
-  }
-  .spinner {
-    width: 32px;
-    height: 32px;
-    border: 3px solid var(--border);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin: 0 auto 12px;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .points-badge {
-    background: rgba(34,197,94,0.15);
-    border: 1px solid var(--green);
-    color: var(--green);
-    border-radius: 6px;
-    padding: 2px 8px;
-    font-size: 12px;
-    font-weight: 700;
-  }
-  .points-badge.partial {
-    background: rgba(251,191,36,0.15);
-    border-color: var(--gold);
-    color: var(--gold);
-  }
-
-  .section-divider {
-    height: 1px;
-    background: var(--border);
-    margin: 24px 0 8px;
-  }
-
+  /* CHAMPION CARD */
   .champ-card {
     background: linear-gradient(135deg, rgba(251,191,36,0.1), rgba(249,115,22,0.05));
-    border: 1px solid rgba(251,191,36,0.3);
-    border-radius: 16px;
-    padding: 16px;
-    margin-bottom: 16px;
+    border: 1px solid rgba(251,191,36,0.3); border-radius: 16px; padding: 16px; margin-bottom: 16px;
   }
-  .champ-title {
-    font-family: 'Bebas Neue', cursive;
-    font-size: 20px;
-    color: var(--gold);
-    margin-bottom: 12px;
-  }
-  .champ-teams {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
+  .champ-title { font-family: 'Bebas Neue', cursive; font-size: 20px; color: var(--gold); margin-bottom: 12px; }
+  .champ-teams { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
   .champ-btn {
-    background: var(--card2);
-    border: 2px solid var(--border);
-    border-radius: 10px;
-    padding: 10px 6px;
-    color: var(--text);
-    font-family: 'Heebo', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
+    background: var(--card2); border: 2px solid var(--border); border-radius: 10px;
+    padding: 10px 6px; color: var(--text); font-family: 'Heebo', sans-serif;
+    font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; text-align: center;
   }
-  .champ-btn.selected {
-    background: rgba(251,191,36,0.15);
-    border-color: var(--gold);
-    color: var(--gold);
-  }
+  .champ-btn.selected { background: rgba(251,191,36,0.15); border-color: var(--gold); color: var(--gold); }
   .champ-btn:hover:not(:disabled) { border-color: var(--gold); }
   .champ-btn:disabled { cursor: not-allowed; }
+
+  /* ADMIN MODAL */
+  .admin-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+    z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px;
+  }
+  .admin-modal {
+    background: var(--card); border: 1px solid rgba(251,191,36,0.4);
+    border-radius: 20px; padding: 28px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto;
+  }
+  .admin-modal-title { font-family: 'Bebas Neue', cursive; font-size: 24px; color: var(--gold); margin-bottom: 20px; }
+  .admin-section-title { font-size: 13px; color: var(--muted); margin-bottom: 10px; margin-top: 18px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .admin-row { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; flex-wrap: wrap; }
+  select, .admin-input {
+    background: var(--card2); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 12px; color: var(--text);
+    font-family: 'Heebo', sans-serif; font-size: 13px; outline: none; flex: 1;
+  }
+  select:focus, .admin-input:focus { border-color: var(--accent); }
+  .btn-admin {
+    background: var(--gold); color: #000; border: none; border-radius: 8px;
+    padding: 10px 16px; font-family: 'Heebo', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-admin:hover { background: #f59e0b; }
+  .btn-admin.danger { background: var(--red); color: white; }
+  .btn-close {
+    background: var(--card2); color: var(--text); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 16px; font-family: 'Heebo', sans-serif;
+    font-size: 13px; cursor: pointer; margin-top: 16px; width: 100%;
+  }
+  .admin-success { color: var(--green); font-size: 12px; margin-top: 6px; }
+  .admin-error { color: var(--red); font-size: 12px; margin-top: 6px; }
+
+  /* ADMIN BUTTON */
+  .admin-fab {
+    position: fixed; bottom: 24px; left: 24px; z-index: 150;
+    background: var(--gold); color: #000; border: none; border-radius: 50%;
+    width: 52px; height: 52px; font-size: 22px; cursor: pointer;
+    box-shadow: 0 4px 20px rgba(251,191,36,0.4); transition: transform 0.2s;
+  }
+  .admin-fab:hover { transform: scale(1.1); }
+
+  /* ADMIN LOGIN */
+  .admin-login { text-align: center; }
+  .admin-login input {
+    width: 100%; background: var(--card2); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 16px; color: var(--text);
+    font-family: 'Heebo', sans-serif; font-size: 15px; outline: none; margin-bottom: 12px;
+    text-align: center;
+  }
+
+  /* MISC */
+  .section-divider { height: 1px; background: var(--border); margin: 24px 0 8px; }
+  .empty-state { text-align: center; color: var(--muted); padding: 40px 20px; font-size: 14px; }
+  .loading { text-align: center; color: var(--muted); padding: 60px 20px; font-size: 14px; }
+  .spinner {
+    width: 32px; height: 32px; border: 3px solid var(--border);
+    border-top-color: var(--accent); border-radius: 50%;
+    animation: spin 0.8s linear infinite; margin: 0 auto 12px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
@@ -547,9 +272,9 @@
     <div class="login-sub">ניחושי פלייאוף</div>
     <div class="input-group">
       <label>השם שלך</label>
-      <input type="text" id="login-nickname" placeholder="למשל: המלך" autocomplete="off">
+      <input type="text" id="login-nickname" placeholder="למשל: המלך" autocomplete="off" onkeydown="if(event.key==='Enter')login()">
     </div>
-    <button class="btn-primary" id="login-btn" onclick="login()">כניסה</button>
+    <button class="btn-primary" id="login-btn" onclick="login()">כניסה / הרשמה</button>
     <div class="error-msg" id="login-error"></div>
   </div>
 </div>
@@ -573,6 +298,7 @@
       <button class="tab-btn" onclick="switchTab('west')">🔴 מערב</button>
       <button class="tab-btn" onclick="switchTab('finals')">🏆 גמר</button>
       <button class="tab-btn" onclick="switchTab('table')">📊 טבלה</button>
+      <button class="tab-btn" onclick="switchTab('bets')">👁 הימורים</button>
     </div>
   </div>
 
@@ -581,41 +307,42 @@
   </div>
 </div>
 
+<!-- ADMIN FAB -->
+<button class="admin-fab" id="admin-fab" onclick="openAdmin()" style="display:none">⚙️</button>
+
+<!-- ADMIN MODAL -->
+<div class="admin-overlay" id="admin-overlay" style="display:none" onclick="closeAdminIfOutside(event)">
+  <div class="admin-modal" id="admin-modal">
+    <!-- filled by JS -->
+  </div>
+</div>
+
 <script>
 const SUPABASE_URL = 'https://fvhhaulaswenwnxndvsd.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_eaFXoMmHnbA_-MoDKFiRuw_End-ICiK';
+const ADMIN_PASSWORD = 'Karinvardi2';
+
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// ADMIN EMAILS
-const ADMIN_NAMES = ['אומר']; // שנה לשם שלך
-
-// PLAYOFF STRUCTURE 2026
-const ROUNDS = [
-  { id: 'r1', name: 'סיבוב 1', conf: ['east','west'] },
-  { id: 'r2', name: 'סיבוב 2', conf: ['east','west'] },
-  { id: 'r3', name: 'גמר כנף', conf: ['east','west'] },
-  { id: 'finals', name: 'גמר NBA', conf: ['finals'] },
-];
-
-// Series data - will be loaded from DB, fallback to defaults
+// PLAYOFF STRUCTURE 2026 — ברירת מחדל (ניתן לעדכן מפאנל המנהל)
 const DEFAULT_SERIES = [
   // EAST R1
-  { id: 'e1s1', conf: 'east', round: 1, name: 'סדרה 1', team1: 'Cavaliers', team2: 'TBD (7/8)', deadline: '2026-04-18T20:59:00Z' },
-  { id: 'e1s2', conf: 'east', round: 1, name: 'סדרה 2', team1: 'Celtics', team2: 'TBD (7/8)', deadline: '2026-04-18T20:59:00Z' },
-  { id: 'e1s3', conf: 'east', round: 1, name: 'סדרה 3', team1: 'Knicks', team2: 'TBD (7/8)', deadline: '2026-04-18T20:59:00Z' },
-  { id: 'e1s4', conf: 'east', round: 1, name: 'סדרה 4', team1: 'Pacers', team2: 'TBD (7/8)', deadline: '2026-04-18T20:59:00Z' },
+  { id: 'e1s1', conf: 'east', round: 1, name: 'מזרח סדרה 1', team1: 'Pistons', team2: 'TBD (7/8)', deadline: '2026-04-20T03:00:00Z' },
+  { id: 'e1s2', conf: 'east', round: 1, name: 'מזרח סדרה 2', team1: 'Cavaliers', team2: 'Raptors', deadline: '2026-04-20T03:00:00Z' },
+  { id: 'e1s3', conf: 'east', round: 1, name: 'מזרח סדרה 3', team1: 'Knicks', team2: 'Hawks', deadline: '2026-04-20T03:00:00Z' },
+  { id: 'e1s4', conf: 'east', round: 1, name: 'מזרח סדרה 4', team1: 'Celtics', team2: 'TBD (7/8)', deadline: '2026-04-20T03:00:00Z' },
   // WEST R1
-  { id: 'w1s1', conf: 'west', round: 1, name: 'סדרה 1', team1: 'Thunder', team2: 'TBD (7/8)', deadline: '2026-04-18T20:59:00Z' },
-  { id: 'w1s2', conf: 'west', round: 1, name: 'סדרה 2', team1: 'Lakers', team2: 'TBD (7/8)', deadline: '2026-04-18T20:59:00Z' },
-  { id: 'w1s3', conf: 'west', round: 1, name: 'סדרה 3', team1: 'Nuggets', team2: 'TBD (7/8)', deadline: '2026-04-18T20:59:00Z' },
-  { id: 'w1s4', conf: 'west', round: 1, name: 'סדרה 4', team1: 'Wolves', team2: 'TBD (7/8)', deadline: '2026-04-18T20:59:00Z' },
+  { id: 'w1s1', conf: 'west', round: 1, name: 'מערב סדרה 1', team1: 'Thunder', team2: 'TBD (8/9)', deadline: '2026-04-20T03:00:00Z' },
+  { id: 'w1s2', conf: 'west', round: 1, name: 'מערב סדרה 2', team1: 'Lakers', team2: 'Rockets', deadline: '2026-04-20T03:00:00Z' },
+  { id: 'w1s3', conf: 'west', round: 1, name: 'מערב סדרה 3', team1: 'Nuggets', team2: 'Timberwolves', deadline: '2026-04-20T03:00:00Z' },
+  { id: 'w1s4', conf: 'west', round: 1, name: 'מערב סדרה 4', team1: 'Spurs', team2: 'TBD (7/8)', deadline: '2026-04-20T03:00:00Z' },
   // EAST R2
-  { id: 'e2s1', conf: 'east', round: 2, name: 'סדרה 1', team1: 'TBD', team2: 'TBD', deadline: null },
-  { id: 'e2s2', conf: 'east', round: 2, name: 'סדרה 2', team1: 'TBD', team2: 'TBD', deadline: null },
+  { id: 'e2s1', conf: 'east', round: 2, name: 'מזרח סיבוב 2 — סדרה 1', team1: 'TBD', team2: 'TBD', deadline: null },
+  { id: 'e2s2', conf: 'east', round: 2, name: 'מזרח סיבוב 2 — סדרה 2', team1: 'TBD', team2: 'TBD', deadline: null },
   // WEST R2
-  { id: 'w2s1', conf: 'west', round: 2, name: 'סדרה 1', team1: 'TBD', team2: 'TBD', deadline: null },
-  { id: 'w2s2', conf: 'west', round: 2, name: 'סדרה 2', team1: 'TBD', team2: 'TBD', deadline: null },
+  { id: 'w2s1', conf: 'west', round: 2, name: 'מערב סיבוב 2 — סדרה 1', team1: 'TBD', team2: 'TBD', deadline: null },
+  { id: 'w2s2', conf: 'west', round: 2, name: 'מערב סיבוב 2 — סדרה 2', team1: 'TBD', team2: 'TBD', deadline: null },
   // CONF FINALS
   { id: 'ecf', conf: 'east', round: 3, name: 'גמר מזרח', team1: 'TBD', team2: 'TBD', deadline: null },
   { id: 'wcf', conf: 'west', round: 3, name: 'גמר מערב', team1: 'TBD', team2: 'TBD', deadline: null },
@@ -624,43 +351,40 @@ const DEFAULT_SERIES = [
 ];
 
 let currentUser = null;
+let isAdmin = false;
 let currentTab = 'east';
-let allPicks = {}; // seriesId -> {winner, games}
-let communityPicks = {}; // seriesId -> [{winner, games, count}]
-let results = {}; // seriesId -> {winner, games}
-let seriesData = [...DEFAULT_SERIES];
-let saveTimers = {};
+let allPicks = {};
+let communityPicks = {};
+let results = {};
+let seriesData = DEFAULT_SERIES.map(s => ({...s}));
 
 // ---- AUTH ----
 async function login() {
   const nickname = document.getElementById('login-nickname').value.trim();
   const errEl = document.getElementById('login-error');
   errEl.textContent = '';
-
   if (!nickname || nickname.length < 2) { errEl.textContent = 'נא להכניס שם (לפחות 2 תווים)'; return; }
-
   const btn = document.getElementById('login-btn');
   btn.disabled = true; btn.textContent = 'מתחבר...';
-
-  // Upsert user by nickname
   const { data, error } = await db.from('users').upsert(
     { nickname, updated_at: new Date().toISOString() },
     { onConflict: 'nickname', ignoreDuplicates: false }
   ).select().single();
-
   if (error) {
     errEl.textContent = 'שגיאה: ' + error.message;
     btn.disabled = false; btn.textContent = 'כניסה / הרשמה';
     return;
   }
-
   currentUser = { id: data.id, nickname: data.nickname };
+  try { localStorage.setItem('nba_user', JSON.stringify(currentUser)); } catch(e) {}
   showApp();
 }
 
 function logout() {
-  currentUser = null;
+  currentUser = null; isAdmin = false;
+  try { localStorage.removeItem('nba_user'); } catch(e) {}
   document.getElementById('app').style.display = 'none';
+  document.getElementById('admin-fab').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
 }
 
@@ -668,20 +392,18 @@ function logout() {
 async function showApp() {
   document.getElementById('login-screen').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-
-  const avatar = document.getElementById('user-avatar');
-  const nameEl = document.getElementById('user-name');
-  avatar.textContent = currentUser.nickname.charAt(0).toUpperCase();
-  nameEl.textContent = currentUser.nickname;
-
+  document.getElementById('user-avatar').textContent = currentUser.nickname.charAt(0).toUpperCase();
+  document.getElementById('user-name').textContent = currentUser.nickname;
   await loadAll();
   renderTab();
 }
 
 async function loadAll() {
-  // Load series from DB (if exists)
-  const { data: dbSeries } = await db.from('series').select('*');
-  if (dbSeries && dbSeries.length > 0) seriesData = dbSeries;
+  // Load series from DB
+  const { data: dbSeries } = await db.from('series').select('*').order('round').order('id');
+  if (dbSeries && dbSeries.length > 0) {
+    seriesData = dbSeries;
+  }
 
   // Load my picks
   const { data: picks } = await db.from('picks').select('*').eq('user_id', currentUser.id);
@@ -693,37 +415,29 @@ async function loadAll() {
   results = {};
   if (res) res.forEach(r => { results[r.series_id] = { winner: r.winner, games: r.games }; });
 
-  // Load community picks (only for locked series)
+  // Load community picks for locked series
   await loadCommunityPicks();
 }
 
 async function loadCommunityPicks() {
-  const now = new Date();
   communityPicks = {};
-  for (const s of seriesData) {
-    if (!s.deadline) continue;
-    const dl = new Date(s.deadline);
-    if (now > dl) {
-      const { data } = await db.from('picks').select('winner, games').eq('series_id', s.id);
-      if (data && data.length > 0) {
-        const map = {};
-        data.forEach(p => {
-          const key = p.winner;
-          if (!map[key]) map[key] = { winner: p.winner, count: 0, total: data.length };
-          map[key].count++;
-        });
-        communityPicks[s.id] = Object.values(map);
-      }
-    }
-  }
+  const { data } = await db.from('picks').select('series_id, winner, games');
+  if (!data) return;
+  const maps = {};
+  data.forEach(p => {
+    if (!p.winner) return;
+    if (!maps[p.series_id]) maps[p.series_id] = {};
+    if (!maps[p.series_id][p.winner]) maps[p.series_id][p.winner] = { winner: p.winner, count: 0 };
+    maps[p.series_id][p.winner].count++;
+  });
+  Object.keys(maps).forEach(sid => { communityPicks[sid] = Object.values(maps[sid]); });
 }
 
 // ---- TABS ----
 function switchTab(tab) {
   currentTab = tab;
-  document.querySelectorAll('.tab-btn').forEach((b,i) => {
-    const tabs = ['east','west','finals','table'];
-    b.classList.toggle('active', tabs[i] === tab);
+  document.querySelectorAll('.tab-btn').forEach((b, i) => {
+    b.classList.toggle('active', ['east','west','finals','table','bets'][i] === tab);
   });
   renderTab();
 }
@@ -731,36 +445,24 @@ function switchTab(tab) {
 function renderTab() {
   const el = document.getElementById('main-content');
   if (currentTab === 'table') { renderTable(); return; }
-
+  if (currentTab === 'bets') { renderBets(); return; }
+  const conf = currentTab;
   let html = '';
-  const conf = currentTab; // east / west / finals
 
-  // Champion pick section (only show for east/west)
   if (conf === 'east' || conf === 'west') {
     html += renderChampSection(conf);
   }
 
-  // Group by round
   const rounds = [...new Set(seriesData.filter(s => s.conf === conf).map(s => s.round))].sort();
   for (const round of rounds) {
     const series = seriesData.filter(s => s.conf === conf && s.round === round);
-    if (series.length === 0) continue;
-
-    const roundNames = {1:'סיבוב ראשון', 2:'סיבוב שני', 3:'גמר כנף', 4:'גמר NBA'};
-    html += `<div class="round-header"><div class="round-title">${roundNames[round]||'סיבוב '+round}</div></div>`;
-
-    for (const s of series) {
-      html += renderSeriesCard(s);
-    }
+    if (!series.length) continue;
+    const roundNames = { 1: 'סיבוב ראשון', 2: 'סיבוב שני', 3: 'גמר כנף', 4: 'גמר NBA' };
+    html += `<div class="round-header"><div class="round-title">${roundNames[round] || 'סיבוב ' + round}</div></div>`;
+    for (const s of series) html += renderSeriesCard(s);
   }
 
   if (!html) html = '<div class="empty-state">אין סדרות עדיין</div>';
-
-  // Admin section
-  if (ADMIN_NAMES.includes(currentUser.nickname)) {
-    html += renderAdminSection();
-  }
-
   el.innerHTML = html;
 }
 
@@ -770,19 +472,13 @@ function renderChampSection(conf) {
     .filter(s => s.conf === conf && s.round === 1)
     .flatMap(s => [s.team1, s.team2])
     .filter(t => t && !t.startsWith('TBD'));
-
-  if (confTeams.length === 0) return '';
-
+  if (!confTeams.length) return '';
   const champKey = 'champ_' + conf;
   const myChamp = allPicks[champKey]?.winner;
-  const isLocked = false; // Champion pick always open until finals
-
-  let btns = confTeams.map(t => `
-    <button class="champ-btn ${myChamp===t?'selected':''}" 
-      onclick="pickChamp('${conf}','${t}')" ${isLocked?'disabled':''}>
+  const btns = confTeams.map(t => `
+    <button class="champ-btn ${myChamp === t ? 'selected' : ''}" onclick="pickChamp('${conf}','${t}')">
       ${t}
     </button>`).join('');
-
   return `
     <div class="champ-card">
       <div class="champ-title">🏆 אלוף ${confName}</div>
@@ -794,19 +490,17 @@ function renderChampSection(conf) {
 async function pickChamp(conf, team) {
   const champKey = 'champ_' + conf;
   allPicks[champKey] = { winner: team, games: null };
-  await db.from('picks').upsert({
-    user_id: currentUser.id,
-    series_id: champKey,
-    winner: team,
-    games: null,
-    updated_at: new Date().toISOString()
-  }, { onConflict: 'user_id,series_id' });
   renderTab();
+  await db.from('picks').upsert({
+    user_id: currentUser.id, series_id: champKey,
+    winner: team, games: null, updated_at: new Date().toISOString()
+  }, { onConflict: 'user_id,series_id' });
 }
 
 function renderSeriesCard(s) {
   const now = new Date();
-  const isLocked = s.deadline && now > new Date(s.deadline);
+  const isLocked = !!results[s.id]; // נסגר רק כשיש תוצאה
+  const deadlinePassed = s.deadline && now > new Date(s.deadline);
   const hasResult = results[s.id];
   const myPick = allPicks[s.id];
   const isTBD = s.team1.startsWith('TBD') || s.team2.startsWith('TBD');
@@ -814,81 +508,67 @@ function renderSeriesCard(s) {
   let deadlineStr = '';
   if (s.deadline) {
     const dl = new Date(s.deadline);
-    const d = dl.toLocaleDateString('he-IL', {day:'2-digit',month:'2-digit'});
-    const t = dl.toLocaleTimeString('he-IL', {hour:'2-digit',minute:'2-digit'});
-    deadlineStr = `דדליין: ${d} ${t}`;
+    const d = dl.toLocaleDateString('he-IL', { day: '2-digit', month: '2-digit' });
+    const t = dl.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+    deadlineStr = deadlinePassed ? `דדליין נסגר` : `דדליין: ${d} ${t}`;
   }
 
-  // Points badge
   let pointsBadge = '';
   if (hasResult && myPick) {
-    if (myPick.winner === hasResult.winner && myPick.games == hasResult.games) {
+    if (myPick.winner === hasResult.winner && myPick.games == hasResult.games)
       pointsBadge = `<span class="points-badge">+5 נקודות ✓</span>`;
-    } else if (myPick.winner === hasResult.winner) {
+    else if (myPick.winner === hasResult.winner)
       pointsBadge = `<span class="points-badge partial">+3 נקודות</span>`;
-    }
   }
 
-  // Team buttons
-  let team1Class = 'team-btn';
-  let team2Class = 'team-btn';
-  if (myPick?.winner === s.team1) team1Class += ' selected';
-  if (myPick?.winner === s.team2) team2Class += ' selected';
+  let t1Class = 'team-btn', t2Class = 'team-btn';
+  if (myPick?.winner === s.team1) t1Class += ' selected';
+  if (myPick?.winner === s.team2) t2Class += ' selected';
   if (hasResult) {
-    if (hasResult.winner === s.team1) team1Class += ' winner-correct';
-    else team1Class += ' winner-wrong';
-    if (hasResult.winner === s.team2) team2Class += ' winner-correct';
-    else team2Class += ' winner-wrong';
+    t1Class += hasResult.winner === s.team1 ? ' winner-correct' : ' winner-wrong';
+    t2Class += hasResult.winner === s.team2 ? ' winner-correct' : ' winner-wrong';
   }
 
-  let teamsHtml = `
+  const teamsHtml = `
     <div class="teams-grid">
-      <button class="${team1Class}" onclick="pickTeam('${s.id}','${s.team1}')" ${isLocked||isTBD?'disabled':''}>
-        ${s.team1}
-      </button>
-      <button class="${team2Class}" onclick="pickTeam('${s.id}','${s.team2}')" ${isLocked||isTBD?'disabled':''}>
-        ${s.team2}
-      </button>
+      <button class="${t1Class}" onclick="pickTeam('${s.id}','${s.team1}')" ${isLocked||deadlinePassed||isTBD?'disabled':''}>${s.team1}</button>
+      <button class="${t2Class}" onclick="pickTeam('${s.id}','${s.team2}')" ${isLocked||deadlinePassed||isTBD?'disabled':''}>${s.team2}</button>
     </div>`;
 
-  // Games buttons
   let gamesHtml = '';
-  if (myPick?.winner || (!isLocked && !isTBD)) {
-    const gamesLabel = isLocked ? (myPick?.winner ? 'בחרת:' : '') : 'כמה משחקים?';
-    if (!isTBD) {
-      gamesHtml = `
-        <div class="games-label">${gamesLabel}</div>
-        <div class="games-grid">
-          ${[4,5,6,7].map(g => `
-            <button class="games-btn ${myPick?.games==g?'selected':''} ${hasResult?.games==g?'winner-correct':''}"
-              onclick="pickGames('${s.id}',${g})" ${isLocked||!myPick?.winner?'disabled':''}>
-              ${g}
-            </button>`).join('')}
-        </div>`;
-    }
+  if (!isTBD) {
+    const gLabel = (isLocked||deadlinePassed) ? (myPick?.winner ? 'בחרת:' : '') : 'כמה משחקים?';
+    gamesHtml = `
+      <div class="games-label">${gLabel}</div>
+      <div class="games-grid">
+        ${[4,5,6,7].map(g => `
+          <button class="games-btn ${myPick?.games==g?'selected':''} ${hasResult?.games==g?'winner-correct':''}"
+            onclick="pickGames('${s.id}',${g})" ${isLocked||deadlinePassed||!myPick?.winner?'disabled':''}>${g}</button>
+        `).join('')}
+      </div>`;
   }
 
-  // Community percentages (show after deadline)
+  // אחוזים — תמיד גלויים אם יש ניחושים
   let communityHtml = '';
-  if (isLocked && communityPicks[s.id]) {
-    const total = communityPicks[s.id].reduce((a,b)=>a+b.count,0);
+  if (!isTBD && communityPicks[s.id]?.length) {
+    const total = communityPicks[s.id].reduce((a,b) => a + b.count, 0);
     communityHtml = `
       <div class="community-section">
         <div class="community-label">ניחושי הקבוצה (${total} ניחושים)</div>
-        ${communityPicks[s.id].sort((a,b)=>b.count-a.count).map(p => {
-          const pct = Math.round(p.count/total*100);
+        ${communityPicks[s.id].sort((a,b) => b.count - a.count).map(p => {
+          const pct = Math.round(p.count / total * 100);
           return `<div class="pct-row">
             <div class="pct-header"><span>${p.winner}</span><span>${pct}% (${p.count})</span></div>
             <div class="pct-bar-bg"><div class="pct-bar-fill" style="width:${pct}%"></div></div>
           </div>`;
         }).join('')}
       </div>`;
-  } else if (isLocked && !isTBD) {
-    communityHtml = `<div style="font-size:12px;color:var(--muted);margin-top:10px;text-align:center">הניחושים יוצגו אחרי סגירת הדדליין</div>`;
   }
 
-  let lockedHtml = isLocked ? `<div class="locked-notice">🔒 ההימור נסגר</div>` : '';
-  if (isTBD) lockedHtml = `<div class="locked-notice">⏳ ממתין לקביעת הקבוצות</div>`;
+  const lockedHtml = isTBD
+    ? `<div class="locked-notice">⏳ ממתין לקביעת הקבוצות</div>`
+    : isLocked ? `<div class="locked-notice">🔒 ההימור נסגר — ${hasResult.winner} ניצחה ${hasResult.games}-${hasResult.games==4?0:hasResult.games==5?1:hasResult.games==6?2:3}</div>`
+    : deadlinePassed ? `<div class="locked-notice" style="border-color:rgba(249,115,22,0.3);color:var(--accent)">⏰ דדליין עבר — ממתין לתוצאה</div>` : '';
 
   return `
     <div class="series-card ${isLocked?'locked':''}">
@@ -897,7 +577,7 @@ function renderSeriesCard(s) {
           <div class="series-name">${s.name}</div>
           ${pointsBadge}
         </div>
-        <div class="series-deadline ${isLocked?'expired':''}">${deadlineStr}</div>
+        <div class="series-deadline ${deadlinePassed?'expired':''}">${deadlineStr}</div>
       </div>
       ${teamsHtml}
       ${gamesHtml}
@@ -909,7 +589,7 @@ function renderSeriesCard(s) {
 async function pickTeam(seriesId, team) {
   if (!allPicks[seriesId]) allPicks[seriesId] = {};
   allPicks[seriesId].winner = team;
-  allPicks[seriesId].games = null; // reset games
+  allPicks[seriesId].games = null;
   renderTab();
   await savePick(seriesId);
 }
@@ -925,32 +605,104 @@ async function savePick(seriesId) {
   const pick = allPicks[seriesId];
   if (!pick?.winner) return;
   await db.from('picks').upsert({
-    user_id: currentUser.id,
-    series_id: seriesId,
-    winner: pick.winner,
-    games: pick.games,
-    updated_at: new Date().toISOString()
+    user_id: currentUser.id, series_id: seriesId,
+    winner: pick.winner, games: pick.games, updated_at: new Date().toISOString()
   }, { onConflict: 'user_id,series_id' });
+}
+
+// ---- BETS VIEW ----
+async function renderBets() {
+  const el = document.getElementById('main-content');
+  el.innerHTML = '<div class="loading"><div class="spinner"></div>טוען הימורים...</div>';
+
+  const now = new Date();
+  const { data: users } = await db.from('users').select('*');
+  const { data: allPicksData } = await db.from('picks').select('*');
+  if (!users?.length) { el.innerHTML = '<div class="empty-state">אין שחקנים עדיין</div>'; return; }
+
+  // Only show series where deadline has passed
+  const lockedSeries = seriesData.filter(s => {
+    const deadlinePassed = s.deadline && now > new Date(s.deadline);
+    const hasResult = !!results[s.id];
+    return (deadlinePassed || hasResult) && !s.team1.startsWith('TBD') && !s.team2.startsWith('TBD');
+  });
+
+  if (!lockedSeries.length) {
+    el.innerHTML = '<div class="empty-state">ההימורים יוצגו לאחר סגירת הדדליין הראשון 🔒</div>';
+    return;
+  }
+
+  // Build picks map: userId -> seriesId -> pick
+  const picksMap = {};
+  (allPicksData || []).forEach(p => {
+    if (!picksMap[p.user_id]) picksMap[p.user_id] = {};
+    picksMap[p.user_id][p.series_id] = p;
+  });
+
+  const roundNames = { 1: 'סיבוב ראשון', 2: 'סיבוב שני', 3: 'גמר כנף', 4: 'גמר NBA' };
+
+  let html = '';
+
+  // Group locked series by round
+  const rounds = [...new Set(lockedSeries.map(s => s.round))].sort();
+  for (const round of rounds) {
+    const roundSeries = lockedSeries.filter(s => s.round === round);
+    html += `<div class="round-header"><div class="round-title">${roundNames[round] || 'סיבוב ' + round}</div></div>`;
+
+    for (const s of roundSeries) {
+      const res = results[s.id];
+      html += `
+        <div class="series-card" style="margin-bottom:16px">
+          <div class="series-meta">
+            <div class="series-name">${s.name}: <b style="color:var(--text)">${s.team1} vs ${s.team2}</b></div>
+            ${res ? `<div style="font-size:11px;color:var(--green);font-weight:700">✓ ${res.winner} (${res.games} משחקים)</div>` : ''}
+          </div>
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead>
+              <tr style="color:var(--muted);font-size:11px;border-bottom:1px solid var(--border)">
+                <th style="text-align:right;padding:6px 4px">שחקן</th>
+                <th style="text-align:center;padding:6px 4px">מנצח</th>
+                <th style="text-align:center;padding:6px 4px">משחקים</th>
+                <th style="text-align:center;padding:6px 4px">נקודות</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${users.map(u => {
+                const pick = picksMap[u.id]?.[s.id];
+                const isMe = u.id === currentUser.id;
+                let pts = '';
+                let winnerColor = 'var(--text)';
+                if (res && pick) {
+                  if (pick.winner === res.winner && pick.games == res.games) { pts = '+5 ✓'; winnerColor = 'var(--green)'; }
+                  else if (pick.winner === res.winner) { pts = '+3'; winnerColor = 'var(--gold)'; }
+                  else { pts = '0'; winnerColor = 'var(--muted)'; }
+                }
+                return `<tr style="border-bottom:1px solid rgba(255,255,255,0.05);${isMe?'background:rgba(249,115,22,0.05)':''}">
+                  <td style="padding:8px 4px;font-weight:${isMe?'700':'400'}">${u.nickname}${isMe?' 👤':''}</td>
+                  <td style="text-align:center;padding:8px 4px;color:${winnerColor}">${pick?.winner || '—'}</td>
+                  <td style="text-align:center;padding:8px 4px;color:var(--accent2)">${pick?.games ? pick.games + ' משחקים' : '—'}</td>
+                  <td style="text-align:center;padding:8px 4px;font-weight:700;color:${pts==='+5 ✓'?'var(--green)':pts==='+3'?'var(--gold)':'var(--muted)'}">${pts || '—'}</td>
+                </tr>`;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>`;
+    }
+  }
+
+  el.innerHTML = html || '<div class="empty-state">אין נתונים להציג</div>';
 }
 
 // ---- TABLE ----
 async function renderTable() {
   const el = document.getElementById('main-content');
   el.innerHTML = '<div class="loading"><div class="spinner"></div>מחשב ניקוד...</div>';
-
   const { data: users } = await db.from('users').select('*');
   const { data: allPicksData } = await db.from('picks').select('*');
   const { data: resData } = await db.from('results').select('*');
-
-  if (!users || users.length === 0) {
-    el.innerHTML = '<div class="empty-state">אין שחקנים עדיין</div>';
-    return;
-  }
-
+  if (!users?.length) { el.innerHTML = '<div class="empty-state">אין שחקנים עדיין</div>'; return; }
   const resultsMap = {};
   if (resData) resData.forEach(r => resultsMap[r.series_id] = r);
-
-  // Calculate scores
   const scores = users.map(u => {
     const myPicks = (allPicksData||[]).filter(p => p.user_id === u.id);
     let total = 0, exact = 0, winner = 0;
@@ -971,9 +723,9 @@ async function renderTable() {
     html += `
       <div class="lb-row ${isMe?'me':''}">
         <div class="lb-rank ${rankClass}">${rankEmoji}</div>
-        <div>
+        <div class="lb-name-col">
           <div class="lb-name">${s.nickname} ${isMe?'(אתה)':''}</div>
-          <div class="lb-breakdown">${s.exact} מדויק × 5 + ${s.winner} מנצח × 3</div>
+          <div class="lb-breakdown">${s.exact} מדויק ×5 + ${s.winner} מנצח ×3</div>
         </div>
         <div class="lb-score">${s.total}</div>
       </div>`;
@@ -983,68 +735,169 @@ async function renderTable() {
 }
 
 // ---- ADMIN ----
-function renderAdminSection() {
-  let seriesOptions = seriesData.map(s => `<option value="${s.id}">${s.name} (${s.id})</option>`).join('');
-  return `
-    <div class="section-divider"></div>
-    <div class="admin-section">
-      <div class="admin-title">⚙️ פאנל מנהל</div>
-      <div style="font-size:13px;color:var(--muted);margin-bottom:12px">הכנסת תוצאה לסדרה:</div>
-      <div class="admin-row">
-        <select id="admin-series" style="flex:2">${seriesOptions}</select>
-      </div>
-      <div class="admin-row">
-        <input class="admin-input" id="admin-winner" placeholder="קבוצה מנצחת" style="flex:2">
-        <select id="admin-games">
-          <option value="4">4-0</option>
-          <option value="5">4-1</option>
-          <option value="6">4-2</option>
-          <option value="7">4-3</option>
-        </select>
-        <button class="btn-small" onclick="submitResult()">שמור</button>
-      </div>
-      <div id="admin-msg" style="font-size:12px;color:var(--green);margin-top:8px"></div>
+let adminAuthenticated = false;
+
+function openAdmin() {
+  document.getElementById('admin-overlay').style.display = 'flex';
+  if (!adminAuthenticated) {
+    renderAdminLogin();
+  } else {
+    renderAdminPanel();
+  }
+}
+
+function closeAdmin() {
+  document.getElementById('admin-overlay').style.display = 'none';
+}
+
+function closeAdminIfOutside(e) {
+  if (e.target === document.getElementById('admin-overlay')) closeAdmin();
+}
+
+function renderAdminLogin() {
+  document.getElementById('admin-modal').innerHTML = `
+    <div class="admin-login">
+      <div class="admin-modal-title">🔐 כניסת מנהל</div>
+      <input type="password" id="admin-pass-input" placeholder="סיסמה" onkeydown="if(event.key==='Enter')verifyAdminPass()">
+      <button class="btn-primary" onclick="verifyAdminPass()">כניסה</button>
+      <div class="admin-error" id="admin-pass-error"></div>
+      <button class="btn-close" onclick="closeAdmin()">ביטול</button>
     </div>`;
+  setTimeout(() => document.getElementById('admin-pass-input')?.focus(), 100);
+}
+
+function verifyAdminPass() {
+  const val = document.getElementById('admin-pass-input').value;
+  if (val === ADMIN_PASSWORD) {
+    adminAuthenticated = true;
+    renderAdminPanel();
+  } else {
+    document.getElementById('admin-pass-error').textContent = 'סיסמה שגויה';
+  }
+}
+
+function renderAdminPanel() {
+  const seriesOptions = seriesData.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+  const seriesOptionsForEdit = seriesData.map(s => `<option value="${s.id}">${s.name} (${s.team1} vs ${s.team2})</option>`).join('');
+
+  document.getElementById('admin-modal').innerHTML = `
+    <div class="admin-modal-title">⚙️ פאנל מנהל</div>
+
+    <!-- הכנסת תוצאה -->
+    <div class="admin-section-title">📋 הכנסת תוצאה לסדרה</div>
+    <div class="admin-row">
+      <select id="res-series">${seriesOptions}</select>
+    </div>
+    <div class="admin-row">
+      <input class="admin-input" id="res-winner" placeholder="קבוצה מנצחת (כמו בכרטיס)">
+      <select id="res-games">
+        <option value="4">4-0</option>
+        <option value="5">4-1</option>
+        <option value="6">4-2</option>
+        <option value="7">4-3</option>
+      </select>
+      <button class="btn-admin" onclick="submitResult()">שמור</button>
+    </div>
+    <div id="res-msg"></div>
+
+    <!-- עדכון קבוצות -->
+    <div class="admin-section-title" style="margin-top:24px">✏️ עדכון קבוצות בסדרה</div>
+    <div class="admin-row">
+      <select id="edit-series">${seriesOptionsForEdit}</select>
+    </div>
+    <div class="admin-row">
+      <input class="admin-input" id="edit-team1" placeholder="קבוצה 1">
+      <input class="admin-input" id="edit-team2" placeholder="קבוצה 2">
+    </div>
+    <div class="admin-row">
+      <input class="admin-input" id="edit-deadline" placeholder="דדליין (YYYY-MM-DDThh:mm:00Z)" style="flex:2">
+      <button class="btn-admin" onclick="updateSeries()">עדכן</button>
+    </div>
+    <div id="edit-msg"></div>
+
+    <button class="btn-close" onclick="closeAdmin()">סגור</button>
+  `;
+
+  // Auto-fill when series is selected
+  document.getElementById('edit-series').addEventListener('change', function() {
+    const s = seriesData.find(x => x.id === this.value);
+    if (!s) return;
+    document.getElementById('edit-team1').value = s.team1 || '';
+    document.getElementById('edit-team2').value = s.team2 || '';
+    document.getElementById('edit-deadline').value = s.deadline || '';
+  });
+  // Trigger initial fill
+  const firstSeries = seriesData[0];
+  if (firstSeries) {
+    document.getElementById('edit-team1').value = firstSeries.team1 || '';
+    document.getElementById('edit-team2').value = firstSeries.team2 || '';
+    document.getElementById('edit-deadline').value = firstSeries.deadline || '';
+  }
 }
 
 async function submitResult() {
-  const seriesId = document.getElementById('admin-series').value;
-  const winner = document.getElementById('admin-winner').value.trim();
-  const games = parseInt(document.getElementById('admin-games').value);
-  if (!winner) { document.getElementById('admin-msg').textContent = 'נא להכניס קבוצה מנצחת'; return; }
+  const seriesId = document.getElementById('res-series').value;
+  const winner = document.getElementById('res-winner').value.trim();
+  const games = parseInt(document.getElementById('res-games').value);
+  const msgEl = document.getElementById('res-msg');
+  if (!winner) { msgEl.innerHTML = '<div class="admin-error">נא להכניס קבוצה מנצחת</div>'; return; }
 
   const { error } = await db.from('results').upsert({
     series_id: seriesId, winner, games, updated_at: new Date().toISOString()
   }, { onConflict: 'series_id' });
 
-  if (error) { document.getElementById('admin-msg').textContent = 'שגיאה: ' + error.message; return; }
-
+  if (error) { msgEl.innerHTML = `<div class="admin-error">שגיאה: ${error.message}</div>`; return; }
   results[seriesId] = { winner, games };
-  document.getElementById('admin-msg').textContent = '✓ תוצאה נשמרה!';
-  setTimeout(() => renderTab(), 1000);
+  msgEl.innerHTML = '<div class="admin-success">✓ תוצאה נשמרה!</div>';
+  renderTab();
 }
 
-// Init
+async function updateSeries() {
+  const seriesId = document.getElementById('edit-series').value;
+  const team1 = document.getElementById('edit-team1').value.trim();
+  const team2 = document.getElementById('edit-team2').value.trim();
+  const deadline = document.getElementById('edit-deadline').value.trim() || null;
+  const msgEl = document.getElementById('edit-msg');
+  if (!team1 || !team2) { msgEl.innerHTML = '<div class="admin-error">נא להכניס שתי קבוצות</div>'; return; }
+
+  // Update in DB
+  const { error } = await db.from('series').upsert({
+    id: seriesId,
+    ...seriesData.find(s => s.id === seriesId),
+    team1, team2, deadline,
+    updated_at: new Date().toISOString()
+  }, { onConflict: 'id' });
+
+  if (error) { msgEl.innerHTML = `<div class="admin-error">שגיאה: ${error.message}</div>`; return; }
+
+  // Update local
+  const idx = seriesData.findIndex(s => s.id === seriesId);
+  if (idx >= 0) { seriesData[idx].team1 = team1; seriesData[idx].team2 = team2; seriesData[idx].deadline = deadline; }
+
+  msgEl.innerHTML = '<div class="admin-success">✓ סדרה עודכנה!</div>';
+  renderTab();
+}
+
+// ---- INIT ----
 window.onload = function() {
-  // Check if already logged in (simple localStorage)
   const saved = localStorage.getItem('nba_user');
   if (saved) {
-    currentUser = JSON.parse(saved);
-    showApp();
+    try {
+      currentUser = JSON.parse(saved);
+      showApp().then(() => {
+        document.getElementById('admin-fab').style.display = 'block';
+      });
+      return;
+    } catch(e) {}
   }
+  // Show admin FAB always (user will need password)
 };
 
-// Save user to localStorage on login
-const origLogin = login;
-login = async function() {
-  await origLogin();
-  if (currentUser) { try { const p = {id:currentUser.id,nickname:currentUser.nickname}; localStorage.setItem('nba_user',JSON.stringify(p)); } catch(e){} }
-};
-
-const origLogout = logout;
-logout = function() {
-  try{localStorage.removeItem('nba_user');}catch(e){}
-  origLogout();
+// Show admin FAB after login
+const origShowApp = showApp;
+showApp = async function() {
+  await origShowApp.call(this);
+  document.getElementById('admin-fab').style.display = 'block';
 };
 </script>
 </body>
