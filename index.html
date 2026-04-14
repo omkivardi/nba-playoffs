@@ -142,7 +142,11 @@
     <div class="login-title">NBA PLAYOFFS 2026</div>
     <div class="login-sub">ניחושי פלייאוף</div>
     <div class="input-group">
-      <label>השם שלך</label>
+      <label>כתובת מייל</label>
+      <input type="email" id="login-email" placeholder="your@email.com" autocomplete="email" onkeydown="if(event.key==='Enter')login()">
+    </div>
+    <div class="input-group" id="nickname-group">
+      <label>כינוי (לתצוגה)</label>
       <input type="text" id="login-nickname" placeholder="למשל: המלך" autocomplete="off" onkeydown="if(event.key==='Enter')login()">
     </div>
     <button class="btn-primary" id="login-btn" onclick="login()">כניסה / הרשמה</button>
@@ -239,18 +243,34 @@ let countdownInterval = null;
 
 // ---- AUTH ----
 async function login() {
+  const email = document.getElementById('login-email').value.trim().toLowerCase();
   const nickname = document.getElementById('login-nickname').value.trim();
   const errEl = document.getElementById('login-error');
   errEl.textContent = '';
-  if (!nickname || nickname.length < 2) { errEl.textContent = 'נא להכניס שם (לפחות 2 תווים)'; return; }
+  if (!email || !email.includes('@')) { errEl.textContent = 'נא להכניס כתובת מייל תקינה'; return; }
   const btn = document.getElementById('login-btn');
   btn.disabled = true; btn.textContent = 'מתחבר...';
-  const { data, error } = await db.from('users').upsert(
-    { nickname, updated_at: new Date().toISOString() },
-    { onConflict: 'nickname', ignoreDuplicates: false }
-  ).select().single();
-  if (error) { errEl.textContent = 'שגיאה: ' + error.message; btn.disabled = false; btn.textContent = 'כניסה / הרשמה'; return; }
-  currentUser = { id: data.id, nickname: data.nickname };
+
+  // Check if user exists by email
+  const { data: existing } = await db.from('users').select('*').eq('email', email).single();
+
+  if (existing) {
+    // Returning user — login directly
+    currentUser = { id: existing.id, nickname: existing.nickname, email: existing.email };
+  } else {
+    // New user — need nickname
+    if (!nickname || nickname.length < 2) {
+      errEl.textContent = 'משתמש חדש — נא להכניס כינוי (לפחות 2 תווים)';
+      btn.disabled = false; btn.textContent = 'כניסה / הרשמה';
+      return;
+    }
+    const { data, error } = await db.from('users').insert(
+      { email, nickname, updated_at: new Date().toISOString() }
+    ).select().single();
+    if (error) { errEl.textContent = 'שגיאה: ' + error.message; btn.disabled = false; btn.textContent = 'כניסה / הרשמה'; return; }
+    currentUser = { id: data.id, nickname: data.nickname, email: data.email };
+  }
+
   try { localStorage.setItem('nba_user', JSON.stringify(currentUser)); } catch(e) {}
   showApp();
 }
@@ -767,7 +787,7 @@ function renderAdminPanel() {
       <input class="admin-input" id="edit-team2" placeholder="קבוצה 2">
     </div>
     <div class="admin-row">
-      <input class="admin-input" id="edit-deadline" placeholder="דדליין (YYYY-MM-DDThh:mm:00Z)" style="flex:2">
+      <input class="admin-input" id="edit-deadline" placeholder="DD-MM-YYYY HH:MM" style="flex:2">
       <button class="btn-admin" onclick="updateSeries()">עדכן</button>
     </div>
     <div id="edit-msg"></div>
@@ -780,7 +800,27 @@ function fillEditFields() {
   if (!s) return;
   document.getElementById('edit-team1').value = s.team1 || '';
   document.getElementById('edit-team2').value = s.team2 || '';
-  document.getElementById('edit-deadline').value = s.deadline || '';
+  // Convert ISO to DD-MM-YYYY HH:MM for display
+  if (s.deadline) {
+    const d = new Date(s.deadline);
+    const dd = String(d.getDate()).padStart(2,'0');
+    const mm = String(d.getMonth()+1).padStart(2,'0');
+    const yyyy = d.getFullYear();
+    const hh = String(d.getHours()).padStart(2,'0');
+    const min = String(d.getMinutes()).padStart(2,'0');
+    document.getElementById('edit-deadline').value = `${dd}-${mm}-${yyyy} ${hh}:${min}`;
+  } else {
+    document.getElementById('edit-deadline').value = '';
+  }
+}
+
+function parseDeadline(val) {
+  if (!val || !val.trim()) return null;
+  // Parse DD-MM-YYYY HH:MM
+  const match = val.trim().match(/^(\d{2})-(\d{2})-(\d{4})\s+(\d{2}):(\d{2})$/);
+  if (!match) return null;
+  const [_, dd, mm, yyyy, hh, min] = match;
+  return new Date(`${yyyy}-${mm}-${dd}T${hh}:${min}:00Z`).toISOString();
 }
 
 async function submitResult() {
@@ -811,11 +851,13 @@ async function updateSeries() {
   const seriesId = document.getElementById('edit-series').value;
   const team1 = document.getElementById('edit-team1').value.trim();
   const team2 = document.getElementById('edit-team2').value.trim();
-  const deadline = document.getElementById('edit-deadline').value.trim() || null;
+  const deadlineRaw = document.getElementById('edit-deadline').value.trim();
+  const deadline = parseDeadline(deadlineRaw);
+  if (deadlineRaw && !deadline) { document.getElementById('edit-msg').innerHTML = '<div class="admin-error">פורמט שגוי — נסה DD-MM-YYYY HH:MM</div>'; return; }
   const msgEl = document.getElementById('edit-msg');
   if (!team1 || !team2) { msgEl.innerHTML = '<div class="admin-error">נא להכניס שתי קבוצות</div>'; return; }
   const orig = seriesData.find(s => s.id === seriesId);
-  const { error } = await db.from('series').upsert({ ...orig, id: seriesId, team1, team2, deadline, updated_at: new Date().toISOString() }, { onConflict: 'id' });
+  const { error } = await db.from('series').upsert({ ...orig, id: seriesId, team1, team2, deadline }, { onConflict: 'id' });
   if (error) { msgEl.innerHTML = `<div class="admin-error">שגיאה: ${error.message}</div>`; return; }
   const idx = seriesData.findIndex(s => s.id === seriesId);
   if (idx >= 0) { seriesData[idx].team1 = team1; seriesData[idx].team2 = team2; seriesData[idx].deadline = deadline; }
