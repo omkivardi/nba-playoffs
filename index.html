@@ -196,6 +196,7 @@
 const SUPABASE_URL = 'https://fvhhaulaswenwnxndvsd.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_eaFXoMmHnbA_-MoDKFiRuw_End-ICiK';
 const ADMIN_PASSWORD = 'Karinvardi2';
+const ADMIN_EMAIL = 'omervardi15@gmail.com';
 const { createClient } = supabase;
 const db = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -290,7 +291,9 @@ async function showApp() {
   document.getElementById('app').style.display = 'block';
   document.getElementById('user-avatar').textContent = currentUser.nickname.charAt(0).toUpperCase();
   document.getElementById('user-name').textContent = currentUser.nickname;
-  document.getElementById('admin-fab').style.display = 'block';
+  if (currentUser.email === ADMIN_EMAIL) {
+    document.getElementById('admin-fab').style.display = 'block';
+  }
   await loadAll();
   startCountdown();
   renderTab();
@@ -1104,7 +1107,12 @@ async function updateSeries() {
 // ---- INIT ----
 window.onload = function() {
   const saved = localStorage.getItem('nba_user');
-  if (saved) { try { currentUser = JSON.parse(saved); showApp(); } catch(e) {} }
+  if (saved) {
+    try {
+      currentUser = JSON.parse(saved);
+      showApp();
+    } catch(e) {}
+  }
 };
 </script>
 </body>
