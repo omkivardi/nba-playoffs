@@ -608,6 +608,12 @@ async function pickGames(seriesId, games) {
 async function savePick(seriesId) {
   const pick = allPicks[seriesId];
   if (!pick?.winner) return;
+  // Double-check deadline server-side
+  const s = seriesData.find(x => x.id === seriesId);
+  if (s?.deadline && new Date() > new Date(s.deadline)) {
+    console.warn('Deadline passed, pick rejected');
+    return;
+  }
   await db.from('picks').upsert({
     user_id: currentUser.id, series_id: seriesId,
     winner: pick.winner, games: pick.games, updated_at: new Date().toISOString()
@@ -767,9 +773,11 @@ function renderAdminPanel() {
   document.getElementById('admin-modal').innerHTML = `
     <div class="admin-modal-title">⚙️ פאנל מנהל</div>
     <div class="admin-section-title">📋 הכנסת תוצאה לסדרה</div>
-    <div class="admin-row"><select id="res-series">${seriesOptions}</select></div>
+    <div class="admin-row"><select id="res-series" onchange="updateWinnerDropdown()">${seriesOptions}</select></div>
     <div class="admin-row">
-      <input class="admin-input" id="res-winner" placeholder="קבוצה מנצחת">
+      <select id="res-winner" style="flex:2">
+        <option value="">בחר קבוצה מנצחת</option>
+      </select>
       <select id="res-games"><option value="4">4-0</option><option value="5">4-1</option><option value="6">4-2</option><option value="7">4-3</option></select>
       <button class="btn-admin" onclick="submitResult()">שמור</button>
     </div>
@@ -793,6 +801,22 @@ function renderAdminPanel() {
     <div id="edit-msg"></div>
     <button class="btn-close" onclick="closeAdmin()">סגור</button>`;
   fillEditFields();
+  updateWinnerDropdown();
+}
+
+function updateWinnerDropdown() {
+  const seriesId = document.getElementById('res-series').value;
+  const s = seriesData.find(x => x.id === seriesId);
+  const sel = document.getElementById('res-winner');
+  if (!sel) return;
+  sel.innerHTML = '<option value="">בחר קבוצה מנצחת</option>';
+  if (s && !s.team1.startsWith('TBD') && !s.team2.startsWith('TBD')) {
+    sel.innerHTML += `<option value="${s.team1}">${s.team1}</option><option value="${s.team2}">${s.team2}</option>`;
+  } else if (s) {
+    [s.team1, s.team2].forEach(t => {
+      if (t) sel.innerHTML += `<option value="${t}">${t}</option>`;
+    });
+  }
 }
 
 function fillEditFields() {
@@ -825,10 +849,10 @@ function parseDeadline(val) {
 
 async function submitResult() {
   const seriesId = document.getElementById('res-series').value;
-  const winner = document.getElementById('res-winner').value.trim();
+  const winner = document.getElementById('res-winner').value;
   const games = parseInt(document.getElementById('res-games').value);
   const msgEl = document.getElementById('res-msg');
-  if (!winner) { msgEl.innerHTML = '<div class="admin-error">נא להכניס קבוצה מנצחת</div>'; return; }
+  if (!winner) { msgEl.innerHTML = '<div class="admin-error">נא לבחור קבוצה מנצחת</div>'; return; }
   const { error } = await db.from('results').upsert({ series_id: seriesId, winner, games, updated_at: new Date().toISOString() }, { onConflict: 'series_id' });
   if (error) { msgEl.innerHTML = `<div class="admin-error">שגיאה: ${error.message}</div>`; return; }
   results[seriesId] = { winner, games };
