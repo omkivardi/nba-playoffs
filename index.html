@@ -179,6 +179,7 @@
       <button class="tab-btn" onclick="switchTab('champ')">👑 זוכה</button>
       <button class="tab-btn" onclick="switchTab('table')">📊 טבלה</button>
       <button class="tab-btn" onclick="switchTab('bets')">👁 הימורים</button>
+      <button class="tab-btn" onclick="switchTab('rules')">📋 חוקים</button>
     </div>
   </div>
   <div class="content" id="main-content">
@@ -380,7 +381,7 @@ function updateCountdown() {
 function switchTab(tab) {
   currentTab = tab;
   document.querySelectorAll('.tab-btn').forEach((b, i) => {
-    b.classList.toggle('active', ['east','west','finals','champ','table','bets'][i] === tab);
+    b.classList.toggle('active', ['east','west','finals','champ','table','bets','rules'][i] === tab);
   });
   renderTab();
 }
@@ -388,6 +389,7 @@ function switchTab(tab) {
 function renderTab() {
   const el = document.getElementById('main-content');
   if (currentTab === 'table') { renderTable(); return; }
+  if (currentTab === 'rules') { renderRules(); return; }
   if (currentTab === 'bets') { renderBets(); return; }
   if (currentTab === 'champ') { renderChamp(); return; }
   const conf = currentTab;
@@ -631,13 +633,24 @@ async function renderTable() {
   const resultsMap = {};
   if (resData) resData.forEach(r => { resultsMap[r.series_id] = r; });
 
+  // Load penalties
+  const { data: penaltiesData } = await db.from('penalties').select('*');
+  const penaltiesMap = {};
+  if (penaltiesData) penaltiesData.forEach(p => {
+    if (!penaltiesMap[p.user_id]) penaltiesMap[p.user_id] = 0;
+    penaltiesMap[p.user_id] += p.points;
+  });
+
   const scores = users.map(u => {
     const myPicks = (allPicksData||[]).filter(p => p.user_id === u.id);
     let total = 0, exact = 0, winner = 0, champBonus = 0;
+    // Check if user picked champ before deadline
+    const champPicked = myPicks.find(p => p.series_id === 'champ');
+    const champDeadlinePassed = new Date() > new Date(CHAMP_DEADLINE);
     myPicks.forEach(p => {
       if (p.series_id === 'champ') {
         const champRes = resultsMap['champ'];
-        if (champRes && p.winner === champRes.winner) {
+        if (champRes && p.winner === champRes.winner && champPicked) {
           champBonus = CHAMP_POINTS[p.winner] || 0;
           total += champBonus;
         }
@@ -648,7 +661,10 @@ async function renderTable() {
       if (p.winner === r.winner && p.games == r.games) { total += 5; exact++; }
       else if (p.winner === r.winner) { total += 3; winner++; }
     });
-    return { ...u, total, exact, winner, champBonus };
+    // Apply penalties
+    const penalty = penaltiesMap[u.id] || 0;
+    total += penalty; // penalty is negative
+    return { ...u, total, exact, winner, champBonus, penalty };
   }).sort((a,b) => b.total - a.total);
 
   let html = '<div class="leaderboard">';
@@ -661,13 +677,65 @@ async function renderTable() {
         <div class="lb-rank ${rankClass}">${rankEmoji}</div>
         <div class="lb-name-col">
           <div class="lb-name">${s.nickname} ${isMe?'(אתה)':''}</div>
-          <div class="lb-breakdown">${s.exact} מדויק×5 + ${s.winner} מנצח×3${s.champBonus?` + זוכה×${s.champBonus}`:''}</div>
+          <div class="lb-breakdown">${s.exact} מדויק×5 + ${s.winner} מנצח×3${s.champBonus?` + זוכה×${s.champBonus}`:''}${s.penalty?` <span style='color:var(--red)'>${s.penalty} עונש</span>`:''}</div>
         </div>
         <div class="lb-score">${s.total}</div>
       </div>`;
   });
   html += '</div>';
   el.innerHTML = html;
+}
+
+// ---- RULES TAB ----
+function renderRules() {
+  const el = document.getElementById('main-content');
+  el.innerHTML = `
+    <div style="padding-top:8px">
+      <div style="font-family:'Bebas Neue',cursive;font-size:32px;color:var(--accent);margin-bottom:16px;letter-spacing:2px">📋 חוקי המשחק</div>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:12px">
+        <div style="font-family:'Bebas Neue',cursive;font-size:20px;color:var(--accent2);margin-bottom:10px">🏀 ניחוש סדרה</div>
+        <div style="font-size:14px;line-height:2;color:var(--text)">
+          <div>✅ ניחוש קבוצה מנצחת בלבד → <span style="color:var(--gold);font-weight:700">+3 נקודות</span></div>
+          <div>🎯 ניחוש מדויק (קבוצה + מספר משחקים) → <span style="color:var(--green);font-weight:700">+5 נקודות</span></div>
+          <div>❌ ניחוש שגוי → <span style="color:var(--muted)">0 נקודות</span></div>
+        </div>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:12px">
+        <div style="font-family:'Bebas Neue',cursive;font-size:20px;color:var(--gold);margin-bottom:10px">🏆 הימור זוכה NBA</div>
+        <div style="font-size:14px;line-height:2;color:var(--text)">
+          <div>חייב להיבחר לפני תחילת הפלייאוף</div>
+          <div>הנקודות משתנות לפי יחסי ההימורים האמיתיים:</div>
+          <div style="margin-top:6px;color:var(--muted);font-size:12px">
+            Thunder: 3 נק׳ | Spurs/Celtics: 6 | Nuggets: 8 | Cavaliers: 9<br>
+            Knicks/Pistons: 11 | Rockets: 14 | Wolves: 15 | Hornets: 19<br>
+            Hawks: 20 | 76ers: 22 | Magic/Raptors/Lakers: 23<br>
+            Warriors/Suns: 26 | Blazers/Clippers/Heat: 27
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:12px">
+        <div style="font-family:'Bebas Neue',cursive;font-size:20px;color:var(--red);margin-bottom:10px">⚠️ כללים חשובים</div>
+        <div style="font-size:14px;line-height:2;color:var(--text)">
+          <div>🔒 לא ניתן לשנות ניחוש לאחר סגירת הדדליין</div>
+          <div>🏠 לא הימרת בזמן? תקבל אוטומטית קבוצת בית ב-4-2 — <span style="color:var(--red)">ללא אפשרות לנקודות</span></div>
+          <div>✏️ שינוי הימור ע"י המנהל → <span style="color:var(--red);font-weight:700">-2 נקודות עונש</span></div>
+          <div>🏆 לא בחרת זוכה לפני תחילת הפלייאוף? לא תקבל נקודות זוכה</div>
+        </div>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px">
+        <div style="font-family:'Bebas Neue',cursive;font-size:20px;color:var(--green);margin-bottom:10px">🎮 איך משחקים?</div>
+        <div style="font-size:14px;line-height:2;color:var(--text)">
+          <div>1️⃣ בחר זוכה NBA מטאב 👑 <b>לפני</b> תחילת הפלייאוף</div>
+          <div>2️⃣ הימר על כל סדרה לפני הדדליין שלה</div>
+          <div>3️⃣ בחר קבוצה מנצחת + מספר משחקים</div>
+          <div>4️⃣ צבור נקודות ועלה בטבלה!</div>
+        </div>
+      </div>
+    </div>`;
 }
 
 // ---- BETS TAB ----
@@ -806,6 +874,22 @@ function renderAdminPanel() {
       <button class="btn-admin danger" onclick="resetResult()" style="background:var(--red);color:white">איפוס</button>
     </div>
     <div id="reset-msg"></div>
+    <div class="admin-section-title" style="margin-top:20px">✏️ עריכת הימור משתמש (-2 נקודות)</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:8px">שינוי הימור ע"י מנהל גורר עונש של -2</div>
+    <div class="admin-row">
+      <select id="edit-pick-series" onchange="loadUsersForSeries()" style="flex:2">${seriesOptions}</select>
+    </div>
+    <div class="admin-row">
+      <select id="edit-pick-user" style="flex:2"><option value="">טוען משתמשים...</option></select>
+    </div>
+    <div class="admin-row">
+      <select id="edit-pick-winner" style="flex:2"><option value="">בחר קבוצה</option></select>
+      <select id="edit-pick-games"><option value="4">4-0</option><option value="5">4-1</option><option value="6">4-2</option><option value="7">4-3</option></select>
+    </div>
+    <div class="admin-row">
+      <button class="btn-admin" onclick="adminEditPick()">שמור (-2 נק׳)</button>
+    </div>
+    <div id="edit-pick-msg"></div>
     <button class="btn-close" onclick="closeAdmin()">סגור</button>\``;
   fillEditFields();
   updateWinnerDropdown();
@@ -834,6 +918,52 @@ async function resetResult() {
   delete results[seriesId];
   msgEl.innerHTML = '<div class="admin-success">✓ תוצאה אופסה — הסדרה פתוחה!</div>';
   renderTab();
+}
+
+async function loadUsersForSeries() {
+  const seriesId = document.getElementById('edit-pick-series').value;
+  const s = seriesData.find(x => x.id === seriesId);
+  const { data: users } = await db.from('users').select('id, nickname');
+  const { data: picks } = await db.from('picks').select('*').eq('series_id', seriesId);
+  const picksMap = {};
+  if (picks) picks.forEach(p => { picksMap[p.user_id] = p; });
+
+  const userSel = document.getElementById('edit-pick-user');
+  userSel.innerHTML = users.map(u => {
+    const pick = picksMap[u.id];
+    const pickStr = pick ? ` (${pick.winner}, ${pick.games})` : ' (לא הימר)';
+    return `<option value="${u.id}">${u.nickname}${pickStr}</option>`;
+  }).join('');
+
+  // Update winner dropdown
+  const winnerSel = document.getElementById('edit-pick-winner');
+  winnerSel.innerHTML = '<option value="">בחר קבוצה</option>';
+  if (s) {
+    [s.team1, s.team2].forEach(t => {
+      if (t && !t.startsWith('TBD')) winnerSel.innerHTML += `<option value="${t}">${t}</option>`;
+    });
+  }
+}
+
+async function adminEditPick() {
+  const seriesId = document.getElementById('edit-pick-series').value;
+  const userId = document.getElementById('edit-pick-user').value;
+  const winner = document.getElementById('edit-pick-winner').value;
+  const games = parseInt(document.getElementById('edit-pick-games').value);
+  const msgEl = document.getElementById('edit-pick-msg');
+  if (!userId || !winner) { msgEl.innerHTML = '<div class="admin-error">נא לבחור משתמש וקבוצה</div>'; return; }
+
+  // Save pick
+  const { error } = await db.from('picks').upsert({
+    user_id: userId, series_id: seriesId,
+    winner, games, updated_at: new Date().toISOString()
+  }, { onConflict: 'user_id,series_id' });
+  if (error) { msgEl.innerHTML = `<div class="admin-error">שגיאה: ${error.message}</div>`; return; }
+
+  // Apply -2 penalty
+  await db.from('penalties').insert({ user_id: userId, series_id: seriesId, points: -2, reason: 'admin_edit', created_at: new Date().toISOString() });
+
+  msgEl.innerHTML = '<div class="admin-success">✓ הימור עודכן + עונש -2 נקודות הוחל</div>';
 }
 
 function fillEditFields() {
