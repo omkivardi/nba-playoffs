@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<!-- saved from url=(0045)file:///C:/Users/omerv/Downloads/index_1.html -->
-<html lang="he" dir="rtl"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🏀 NBA פלייאוף 2026</title>
-<script src="./index11_files/supabase-js@2"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com/">
-<link href="./index11_files/css2" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0a0a0f; --card: #13131a; --card2: #1a1a24; --border: #2a2a3a;
@@ -143,17 +143,17 @@
     <div class="login-sub">ניחושי פלייאוף</div>
     <div class="input-group">
       <label>כתובת מייל</label>
-      <input type="email" id="login-email" placeholder="your@email.com" autocomplete="email" onkeydown="if(event.key===&#39;Enter&#39;)login()">
+      <input type="email" id="login-email" placeholder="your@email.com" autocomplete="email" onkeydown="if(event.key==='Enter' && typeof login==='function')login()">
     </div>
     <div class="input-group" id="nickname-group">
       <label>כינוי (לתצוגה)</label>
-      <input type="text" id="login-nickname" placeholder="למשל: המלך" autocomplete="off" onkeydown="if(event.key===&#39;Enter&#39;)login()">
+      <input type="text" id="login-nickname" placeholder="למשל: המלך" autocomplete="off" onkeydown="if(event.key==='Enter' && typeof login==='function')login()">
     </div>
     <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;margin-bottom:4px">
-      <input type="checkbox" id="remember-me" checked="" style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+      <input type="checkbox" id="remember-me" checked style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
       <label for="remember-me" style="font-size:13px;color:var(--muted);cursor:pointer">זכור אותי</label>
     </div>
-    <button class="btn-primary" id="login-btn" onclick="login()">כניסה / הרשמה</button>
+    <button class="btn-primary" id="login-btn" onclick="if(typeof login==='function')login()">כניסה / הרשמה</button>
     <div class="error-msg" id="login-error"></div>
   </div>
 </div>
@@ -177,13 +177,13 @@
   </div>
   <div class="tabs">
     <div class="tabs-inner">
-      <button class="tab-btn active" onclick="switchTab(&#39;east&#39;)">🔵 מזרח</button>
-      <button class="tab-btn" onclick="switchTab(&#39;west&#39;)">🔴 מערב</button>
-      <button class="tab-btn" onclick="switchTab(&#39;finals&#39;)">🏆 גמר</button>
-      <button class="tab-btn" onclick="switchTab(&#39;champ&#39;)">👑 זוכה</button>
-      <button class="tab-btn" onclick="switchTab(&#39;table&#39;)">📊 טבלה</button>
-      <button class="tab-btn" onclick="switchTab(&#39;bets&#39;)">👁 הימורים</button>
-      <button class="tab-btn" onclick="switchTab(&#39;rules&#39;)">📋 חוקים</button>
+      <button class="tab-btn active" onclick="switchTab('east')">🔵 מזרח</button>
+      <button class="tab-btn" onclick="switchTab('west')">🔴 מערב</button>
+      <button class="tab-btn" onclick="switchTab('finals')">🏆 גמר</button>
+      <button class="tab-btn" onclick="switchTab('champ')">👑 זוכה</button>
+      <button class="tab-btn" onclick="switchTab('table')">📊 טבלה</button>
+      <button class="tab-btn" onclick="switchTab('bets')">👁 הימורים</button>
+      <button class="tab-btn" onclick="switchTab('rules')">📋 חוקים</button>
     </div>
   </div>
   <div class="content" id="main-content">
@@ -1134,6 +1134,5 @@ window.onload = function() {
   }
 };
 </script>
-
-
-</body></html>
+</body>
+</html>
