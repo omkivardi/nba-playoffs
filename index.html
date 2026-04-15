@@ -923,8 +923,9 @@ async function resetResult() {
   const msgEl = document.getElementById('reset-msg');
   const { error } = await db.from('results').delete().eq('series_id', seriesId);
   if (error) { msgEl.innerHTML = `<div class="admin-error">שגיאה: ${error.message}</div>`; return; }
+  await db.from('penalties').delete().eq('series_id', seriesId);
   delete results[seriesId];
-  msgEl.innerHTML = '<div class="admin-success">✓ תוצאה אופסה — הסדרה פתוחה!</div>';
+  msgEl.innerHTML = '<div class="admin-success">✓ תוצאה ועונשים אופסו — הסדרה פתוחה!</div>';
   renderTab();
 }
 
@@ -1063,12 +1064,13 @@ async function updateSeries() {
   const { error } = await db.from('series').upsert({ ...orig, id: seriesId, team1, team2, deadline }, { onConflict: 'id' });
   if (error) { msgEl.innerHTML = `<div class="admin-error">שגיאה: ${error.message}</div>`; return; }
 
-  // אם הדדליין החדש הוא בעתיד — אפס תוצאה אוטומטית
+  // אם הדדליין החדש הוא בעתיד — אפס תוצאה + עונשים אוטומטית
   const isDeadlineFuture = deadline && new Date() < new Date(deadline);
   if (isDeadlineFuture && results[seriesId]) {
     await db.from('results').delete().eq('series_id', seriesId);
+    await db.from('penalties').delete().eq('series_id', seriesId);
     delete results[seriesId];
-    msgEl.innerHTML = '<div class="admin-success">✓ סדרה עודכנה + תוצאה אופסה!</div>';
+    msgEl.innerHTML = '<div class="admin-success">✓ סדרה עודכנה + תוצאה ועונשים אופסו!</div>';
   } else {
     msgEl.innerHTML = '<div class="admin-success">✓ סדרה עודכנה!</div>';
   }
