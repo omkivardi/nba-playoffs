@@ -799,7 +799,14 @@ function renderAdminPanel() {
       <button class="btn-admin" onclick="updateSeries()">עדכן</button>
     </div>
     <div id="edit-msg"></div>
-    <button class="btn-close" onclick="closeAdmin()">סגור</button>`;
+    <div class="admin-section-title" style="margin-top:20px">🗑️ איפוס תוצאה</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:8px">מחק תוצאה כדי לפתוח סדרה מחדש</div>
+    <div class="admin-row">
+      <select id="reset-series">${seriesOptions}</select>
+      <button class="btn-admin danger" onclick="resetResult()" style="background:var(--red);color:white">איפוס</button>
+    </div>
+    <div id="reset-msg"></div>
+    <button class="btn-close" onclick="closeAdmin()">סגור</button>\``;
   fillEditFields();
   updateWinnerDropdown();
 }
@@ -817,6 +824,16 @@ function updateWinnerDropdown() {
       if (t) sel.innerHTML += `<option value="${t}">${t}</option>`;
     });
   }
+}
+
+async function resetResult() {
+  const seriesId = document.getElementById('reset-series').value;
+  const msgEl = document.getElementById('reset-msg');
+  const { error } = await db.from('results').delete().eq('series_id', seriesId);
+  if (error) { msgEl.innerHTML = `<div class="admin-error">שגיאה: ${error.message}</div>`; return; }
+  delete results[seriesId];
+  msgEl.innerHTML = '<div class="admin-success">✓ תוצאה אופסה — הסדרה פתוחה!</div>';
+  renderTab();
 }
 
 function fillEditFields() {
@@ -883,9 +900,19 @@ async function updateSeries() {
   const orig = seriesData.find(s => s.id === seriesId);
   const { error } = await db.from('series').upsert({ ...orig, id: seriesId, team1, team2, deadline }, { onConflict: 'id' });
   if (error) { msgEl.innerHTML = `<div class="admin-error">שגיאה: ${error.message}</div>`; return; }
+
+  // אם הדדליין החדש הוא בעתיד — אפס תוצאה אוטומטית
+  const isDeadlineFuture = deadline && new Date() < new Date(deadline);
+  if (isDeadlineFuture && results[seriesId]) {
+    await db.from('results').delete().eq('series_id', seriesId);
+    delete results[seriesId];
+    msgEl.innerHTML = '<div class="admin-success">✓ סדרה עודכנה + תוצאה אופסה!</div>';
+  } else {
+    msgEl.innerHTML = '<div class="admin-success">✓ סדרה עודכנה!</div>';
+  }
+
   const idx = seriesData.findIndex(s => s.id === seriesId);
   if (idx >= 0) { seriesData[idx].team1 = team1; seriesData[idx].team2 = team2; seriesData[idx].deadline = deadline; }
-  msgEl.innerHTML = '<div class="admin-success">✓ סדרה עודכנה!</div>';
   renderTab();
 }
 
