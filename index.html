@@ -874,6 +874,13 @@ function renderAdminPanel() {
       <button class="btn-admin danger" onclick="resetResult()" style="background:var(--red);color:white">איפוס</button>
     </div>
     <div id="reset-msg"></div>
+    <div class="admin-section-title" style="margin-top:20px">🏠 החלת הימור דיפולטי</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:8px">משתמשים שלא הימרו יקבלו קבוצת בית ב-4-2</div>
+    <div class="admin-row">
+      <select id="default-series">${seriesOptions}</select>
+      <button class="btn-admin" onclick="applyDefaultPicks()">החל</button>
+    </div>
+    <div id="default-msg"></div>
     <div class="admin-section-title" style="margin-top:20px">✏️ עריכת הימור משתמש (-2 נקודות)</div>
     <div style="font-size:12px;color:var(--muted);margin-bottom:8px">שינוי הימור ע"י מנהל גורר עונש של -2</div>
     <div class="admin-row">
@@ -893,6 +900,7 @@ function renderAdminPanel() {
     <button class="btn-close" onclick="closeAdmin()">סגור</button>\``;
   fillEditFields();
   updateWinnerDropdown();
+  loadUsersForSeries();
 }
 
 function updateWinnerDropdown() {
@@ -918,6 +926,30 @@ async function resetResult() {
   delete results[seriesId];
   msgEl.innerHTML = '<div class="admin-success">✓ תוצאה אופסה — הסדרה פתוחה!</div>';
   renderTab();
+}
+
+async function applyDefaultPicks() {
+  const seriesId = document.getElementById('default-series').value;
+  const s = seriesData.find(x => x.id === seriesId);
+  const msgEl = document.getElementById('default-msg');
+  if (!s || s.team1.startsWith('TBD')) { msgEl.innerHTML = '<div class="admin-error">סדרה לא תקינה</div>'; return; }
+
+  const { data: users } = await db.from('users').select('id, nickname');
+  const { data: existingPicks } = await db.from('picks').select('user_id').eq('series_id', seriesId);
+  const pickedUserIds = new Set((existingPicks || []).map(p => p.user_id));
+
+  const unpickedUsers = (users || []).filter(u => !pickedUserIds.has(u.id));
+  if (!unpickedUsers.length) { msgEl.innerHTML = '<div class="admin-success">כל המשתמשים כבר הימרו ✓</div>'; return; }
+
+  // Insert default pick: team1 (home) wins 4-2
+  for (const u of unpickedUsers) {
+    await db.from('picks').upsert({
+      user_id: u.id, series_id: seriesId,
+      winner: s.team1, games: 6,
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'user_id,series_id' });
+  }
+  msgEl.innerHTML = `<div class="admin-success">✓ הוחל על ${unpickedUsers.length} משתמשים: ${s.team1} 4-2</div>`;
 }
 
 async function loadUsersForSeries() {
