@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-<meta charset="UTF-8">
+<!-- saved from url=(0045)file:///C:/Users/omerv/Downloads/index_1.html -->
+<html lang="he" dir="rtl"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🏀 NBA פלייאוף 2026</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<script src="./index11_files/supabase-js@2"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./index11_files/css2" rel="stylesheet">
 <style>
   :root {
     --bg: #0a0a0f; --card: #13131a; --card2: #1a1a24; --border: #2a2a3a;
@@ -143,11 +143,15 @@
     <div class="login-sub">ניחושי פלייאוף</div>
     <div class="input-group">
       <label>כתובת מייל</label>
-      <input type="email" id="login-email" placeholder="your@email.com" autocomplete="email" onkeydown="if(event.key==='Enter')login()">
+      <input type="email" id="login-email" placeholder="your@email.com" autocomplete="email" onkeydown="if(event.key===&#39;Enter&#39;)login()">
     </div>
     <div class="input-group" id="nickname-group">
       <label>כינוי (לתצוגה)</label>
-      <input type="text" id="login-nickname" placeholder="למשל: המלך" autocomplete="off" onkeydown="if(event.key==='Enter')login()">
+      <input type="text" id="login-nickname" placeholder="למשל: המלך" autocomplete="off" onkeydown="if(event.key===&#39;Enter&#39;)login()">
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:8px;margin-bottom:4px">
+      <input type="checkbox" id="remember-me" checked="" style="width:16px;height:16px;accent-color:var(--accent);cursor:pointer">
+      <label for="remember-me" style="font-size:13px;color:var(--muted);cursor:pointer">זכור אותי</label>
     </div>
     <button class="btn-primary" id="login-btn" onclick="login()">כניסה / הרשמה</button>
     <div class="error-msg" id="login-error"></div>
@@ -173,13 +177,13 @@
   </div>
   <div class="tabs">
     <div class="tabs-inner">
-      <button class="tab-btn active" onclick="switchTab('east')">🔵 מזרח</button>
-      <button class="tab-btn" onclick="switchTab('west')">🔴 מערב</button>
-      <button class="tab-btn" onclick="switchTab('finals')">🏆 גמר</button>
-      <button class="tab-btn" onclick="switchTab('champ')">👑 זוכה</button>
-      <button class="tab-btn" onclick="switchTab('table')">📊 טבלה</button>
-      <button class="tab-btn" onclick="switchTab('bets')">👁 הימורים</button>
-      <button class="tab-btn" onclick="switchTab('rules')">📋 חוקים</button>
+      <button class="tab-btn active" onclick="switchTab(&#39;east&#39;)">🔵 מזרח</button>
+      <button class="tab-btn" onclick="switchTab(&#39;west&#39;)">🔴 מערב</button>
+      <button class="tab-btn" onclick="switchTab(&#39;finals&#39;)">🏆 גמר</button>
+      <button class="tab-btn" onclick="switchTab(&#39;champ&#39;)">👑 זוכה</button>
+      <button class="tab-btn" onclick="switchTab(&#39;table&#39;)">📊 טבלה</button>
+      <button class="tab-btn" onclick="switchTab(&#39;bets&#39;)">👁 הימורים</button>
+      <button class="tab-btn" onclick="switchTab(&#39;rules&#39;)">📋 חוקים</button>
     </div>
   </div>
   <div class="content" id="main-content">
@@ -216,17 +220,17 @@ const CHAMP_TEAMS = [
 ];
 
 // דדליין לזוכה
-const CHAMP_DEADLINE = '2026-04-20T03:00:00Z';
+const CHAMP_DEADLINE = '2026-04-18T17:00:00Z'; // משחק ראשון - Cavaliers vs Raptors 20:00 ישראל
 
 const DEFAULT_SERIES = [
-  { id: 'e1s1', conf: 'east', round: 1, name: 'מזרח סדרה 1', team1: 'Pistons', team2: 'TBD (7/8)', deadline: '2026-04-20T03:00:00Z' },
-  { id: 'e1s2', conf: 'east', round: 1, name: 'מזרח סדרה 2', team1: 'Cavaliers', team2: 'Raptors', deadline: '2026-04-20T03:00:00Z' },
-  { id: 'e1s3', conf: 'east', round: 1, name: 'מזרח סדרה 3', team1: 'Knicks', team2: 'Hawks', deadline: '2026-04-20T03:00:00Z' },
-  { id: 'e1s4', conf: 'east', round: 1, name: 'מזרח סדרה 4', team1: 'Celtics', team2: 'TBD (7/8)', deadline: '2026-04-20T03:00:00Z' },
-  { id: 'w1s1', conf: 'west', round: 1, name: 'מערב סדרה 1', team1: 'Thunder', team2: 'TBD (8/9)', deadline: '2026-04-20T03:00:00Z' },
-  { id: 'w1s2', conf: 'west', round: 1, name: 'מערב סדרה 2', team1: 'Lakers', team2: 'Rockets', deadline: '2026-04-20T03:00:00Z' },
-  { id: 'w1s3', conf: 'west', round: 1, name: 'מערב סדרה 3', team1: 'Nuggets', team2: 'Timberwolves', deadline: '2026-04-20T03:00:00Z' },
-  { id: 'w1s4', conf: 'west', round: 1, name: 'מערב סדרה 4', team1: 'Spurs', team2: 'TBD (7/8)', deadline: '2026-04-20T03:00:00Z' },
+  { id: 'e1s1', conf: 'east', round: 1, name: 'מזרח סדרה 1', team1: 'Pistons', team2: 'TBD (7/8)', deadline: '2026-04-26T17:00:00Z' },
+  { id: 'e1s2', conf: 'east', round: 1, name: 'מזרח סדרה 2', team1: 'Cavaliers', team2: 'Raptors', deadline: '2026-04-18T17:00:00Z' },
+  { id: 'e1s3', conf: 'east', round: 1, name: 'מזרח סדרה 3', team1: 'Knicks', team2: 'Hawks', deadline: '2026-04-18T22:00:00Z' },
+  { id: 'e1s4', conf: 'east', round: 1, name: 'מזרח סדרה 4', team1: 'Celtics', team2: 'TBD (7/8)', deadline: '2026-04-26T17:00:00Z' },
+  { id: 'w1s1', conf: 'west', round: 1, name: 'מערב סדרה 1', team1: 'Thunder', team2: 'TBD (8/9)', deadline: '2026-04-26T17:00:00Z' },
+  { id: 'w1s2', conf: 'west', round: 1, name: 'מערב סדרה 2', team1: 'Lakers', team2: 'Rockets', deadline: '2026-04-19T00:30:00Z' },
+  { id: 'w1s3', conf: 'west', round: 1, name: 'מערב סדרה 3', team1: 'Nuggets', team2: 'Timberwolves', deadline: '2026-04-18T19:30:00Z' },
+  { id: 'w1s4', conf: 'west', round: 1, name: 'מערב סדרה 4', team1: 'Spurs', team2: 'TBD (7/8)', deadline: '2026-04-26T17:00:00Z' },
   { id: 'e2s1', conf: 'east', round: 2, name: 'מזרח סיבוב 2 — סדרה 1', team1: 'TBD', team2: 'TBD', deadline: null },
   { id: 'e2s2', conf: 'east', round: 2, name: 'מזרח סיבוב 2 — סדרה 2', team1: 'TBD', team2: 'TBD', deadline: null },
   { id: 'w2s1', conf: 'west', round: 2, name: 'מערב סיבוב 2 — סדרה 1', team1: 'TBD', team2: 'TBD', deadline: null },
@@ -273,7 +277,11 @@ async function login() {
     currentUser = { id: data.id, nickname: data.nickname, email: data.email };
   }
 
-  try { localStorage.setItem('nba_user', JSON.stringify(currentUser)); } catch(e) {}
+  try {
+    const remember = document.getElementById('remember-me')?.checked !== false;
+    const userData = { ...currentUser, savedAt: Date.now(), remember };
+    localStorage.setItem('nba_user', JSON.stringify(userData));
+  } catch(e) {}
   showApp();
 }
 
@@ -415,7 +423,7 @@ function renderChamp() {
   const now = new Date();
   const deadlinePassed = now > new Date(CHAMP_DEADLINE);
   const dl = new Date(CHAMP_DEADLINE);
-  const dlStr = dl.toLocaleDateString('he-IL', { day: '2-digit', month: '2-digit' }) + ' ' + dl.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
+  const dlStr = dl.toLocaleDateString('he-IL', { day: '2-digit', month: '2-digit', timeZone: 'Asia/Jerusalem' }) + ' ' + dl.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jerusalem' });
 
   let html = '';
 
@@ -520,7 +528,7 @@ function renderSeriesCard(s) {
   let deadlineStr = '';
   if (s.deadline) {
     const dl = new Date(s.deadline);
-    deadlineStr = deadlinePassed ? 'דדליין נסגר' : `דדליין: ${dl.toLocaleDateString('he-IL',{day:'2-digit',month:'2-digit'})} ${dl.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit'})}`;
+    deadlineStr = deadlinePassed ? 'דדליין נסגר' : `דדליין: ${dl.toLocaleDateString('he-IL',{day:'2-digit',month:'2-digit',timeZone:'Asia/Jerusalem'})} ${dl.toLocaleTimeString('he-IL',{hour:'2-digit',minute:'2-digit',timeZone:'Asia/Jerusalem'})}`;
   }
 
   let pointsBadge = '';
@@ -1030,12 +1038,13 @@ function fillEditFields() {
   document.getElementById('edit-team2').value = s.team2 || '';
   // Convert ISO to DD-MM-YYYY HH:MM for display
   if (s.deadline) {
-    const d = new Date(s.deadline);
-    const dd = String(d.getDate()).padStart(2,'0');
-    const mm = String(d.getMonth()+1).padStart(2,'0');
-    const yyyy = d.getFullYear();
-    const hh = String(d.getHours()).padStart(2,'0');
-    const min = String(d.getMinutes()).padStart(2,'0');
+    // Show in Israel time (UTC+3)
+    const d = new Date(new Date(s.deadline).getTime() + 3 * 60 * 60 * 1000);
+    const dd = String(d.getUTCDate()).padStart(2,'0');
+    const mm = String(d.getUTCMonth()+1).padStart(2,'0');
+    const yyyy = d.getUTCFullYear();
+    const hh = String(d.getUTCHours()).padStart(2,'0');
+    const min = String(d.getUTCMinutes()).padStart(2,'0');
     document.getElementById('edit-deadline').value = `${dd}-${mm}-${yyyy} ${hh}:${min}`;
   } else {
     document.getElementById('edit-deadline').value = '';
@@ -1044,11 +1053,14 @@ function fillEditFields() {
 
 function parseDeadline(val) {
   if (!val || !val.trim()) return null;
-  // Parse DD-MM-YYYY HH:MM
+  // Parse DD-MM-YYYY HH:MM — treat as Israel time (UTC+3)
   const match = val.trim().match(/^(\d{2})-(\d{2})-(\d{4})\s+(\d{2}):(\d{2})$/);
   if (!match) return null;
   const [_, dd, mm, yyyy, hh, min] = match;
-  return new Date(`${yyyy}-${mm}-${dd}T${hh}:${min}:00Z`).toISOString();
+  // Subtract 3 hours to convert Israel time to UTC
+  const israelDate = new Date(`${yyyy}-${mm}-${dd}T${hh}:${min}:00`);
+  israelDate.setHours(israelDate.getHours() - 3);
+  return israelDate.toISOString();
 }
 
 async function submitResult() {
@@ -1109,11 +1121,19 @@ window.onload = function() {
   const saved = localStorage.getItem('nba_user');
   if (saved) {
     try {
-      currentUser = JSON.parse(saved);
-      showApp();
+      const data = JSON.parse(saved);
+      const maxAge = data.remember !== false ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000;
+      const age = Date.now() - (data.savedAt || 0);
+      if (age < maxAge) {
+        currentUser = { id: data.id, nickname: data.nickname, email: data.email };
+        showApp();
+      } else {
+        localStorage.removeItem('nba_user');
+      }
     } catch(e) {}
   }
 };
 </script>
-</body>
-</html>
+
+
+</body></html>
