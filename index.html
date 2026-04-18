@@ -362,6 +362,16 @@ function startCountdown() {
   if (countdownInterval) clearInterval(countdownInterval);
   updateCountdown();
   countdownInterval = setInterval(updateCountdown, 1000);
+  // Check every minute if a deadline just passed — reload picks state
+  setInterval(() => {
+    const now = new Date();
+    const justPassed = seriesData.some(s => {
+      if (!s.deadline) return false;
+      const dl = new Date(s.deadline);
+      return Math.abs(now - dl) < 60000; // within last minute
+    });
+    if (justPassed) renderTab();
+  }, 30000); // check every 30 seconds
 }
 
 function updateCountdown() {
@@ -867,9 +877,12 @@ function verifyAdminPass() {
   } else { document.getElementById('admin-pass-error').textContent = 'סיסמה שגויה'; }
 }
 
-function renderAdminPanel() {
+async function renderAdminPanel() {
   const seriesOptions = seriesData.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
   const seriesOptionsEdit = seriesData.map(s => `<option value="${s.id}">${s.name} (${s.team1} vs ${s.team2})</option>`).join('');
+  const { data: allUsers } = await db.from('users').select('id, nickname');
+  const usersOptions = (allUsers||[]).map(u => `<option value="${u.id}">${u.nickname}</option>`).join('');
+  const champTeamsOptions = CHAMP_TEAMS.map(t => `<option value="${t}">${t} (${CHAMP_POINTS[t]} נק')</option>`).join('');
   document.getElementById('admin-modal').innerHTML = `
     <div class="admin-modal-title">⚙️ פאנל מנהל</div>
     <div class="admin-section-title">📋 הכנסת תוצאה לסדרה</div>
@@ -913,8 +926,8 @@ function renderAdminPanel() {
       <button class="btn-admin" onclick="applyDefaultPicks()">החל</button>
     </div>
     <div id="default-msg"></div>
-    <div class="admin-section-title" style="margin-top:20px">✏️ עריכת הימור משתמש (-2 נקודות)</div>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:8px">שינוי הימור ע"י מנהל גורר עונש של -2</div>
+    <div class="admin-section-title" style="margin-top:20px">✏️ עריכת הימור משתמש</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:8px">שנה הימור של משתמש</div>
     <div class="admin-row">
       <select id="edit-pick-series" onchange="loadUsersForSeries()" style="flex:2">${seriesOptions}</select>
     </div>
@@ -926,9 +939,17 @@ function renderAdminPanel() {
       <select id="edit-pick-games"><option value="4">4-0</option><option value="5">4-1</option><option value="6">4-2</option><option value="7">4-3</option></select>
     </div>
     <div class="admin-row">
-      <button class="btn-admin" onclick="adminEditPick()">שמור (-2 נק׳)</button>
+      <button class="btn-admin" onclick="adminEditPick()">שמור</button>
     </div>
     <div id="edit-pick-msg"></div>
+    <div class="admin-section-title" style="margin-top:20px">👑 בחירת אלוף למשתמש</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:8px">קבע זוכה בשם משתמש</div>
+    <div class="admin-row">
+      <select id="champ-pick-user" style="flex:2">${usersOptions}</select>
+      <select id="champ-pick-team" style="flex:2">${champTeamsOptions}</select>
+      <button class="btn-admin" onclick="adminSetChampPick()">שמור</button>
+    </div>
+    <div id="champ-pick-msg"></div>
     <button class="btn-close" onclick="closeAdmin()">סגור</button>\``;
   fillEditFields();
   updateWinnerDropdown();
@@ -1025,10 +1046,20 @@ async function adminEditPick() {
   }, { onConflict: 'user_id,series_id' });
   if (error) { msgEl.innerHTML = `<div class="admin-error">שגיאה: ${error.message}</div>`; return; }
 
-  // Apply -2 penalty
-  await db.from('penalties').insert({ user_id: userId, series_id: seriesId, points: -2, reason: 'admin_edit', created_at: new Date().toISOString() });
+  msgEl.innerHTML = '<div class="admin-success">✓ הימור עודכן!</div>';
+}
 
-  msgEl.innerHTML = '<div class="admin-success">✓ הימור עודכן + עונש -2 נקודות הוחל</div>';
+async function adminSetChampPick() {
+  const userId = document.getElementById('champ-pick-user').value;
+  const team = document.getElementById('champ-pick-team').value;
+  const msgEl = document.getElementById('champ-pick-msg');
+  if (!userId || !team) { msgEl.innerHTML = '<div class="admin-error">נא לבחור משתמש וקבוצה</div>'; return; }
+  const { error } = await db.from('picks').upsert({
+    user_id: userId, series_id: 'champ',
+    winner: team, games: null, updated_at: new Date().toISOString()
+  }, { onConflict: 'user_id,series_id' });
+  if (error) { msgEl.innerHTML = `<div class="admin-error">שגיאה: ${error.message}</div>`; return; }
+  msgEl.innerHTML = `<div class="admin-success">✓ ${team} נקבעה כאלופה!</div>`;
 }
 
 function fillEditFields() {
