@@ -956,6 +956,9 @@ async function renderAdminPanel() {
       <button class="btn-admin" onclick="adminSetChampPick()">שמור</button>
     </div>
     <div id="champ-pick-msg"></div>
+    <div class="admin-section-title" style="margin-top:20px">📜 לוג שינויים</div>
+    <button class="btn-admin" onclick="showLogs()" style="width:100%;margin-bottom:8px">הצג לוג</button>
+    <div id="logs-container"></div>
     <button class="btn-close" onclick="closeAdmin()">סגור</button>\``;
   fillEditFields();
   updateWinnerDropdown();
