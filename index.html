@@ -631,16 +631,22 @@ async function pickGames(seriesId, games) {
 async function savePick(seriesId) {
   const pick = allPicks[seriesId];
   if (!pick?.winner) return;
-  // Double-check deadline server-side
   const s = seriesData.find(x => x.id === seriesId);
   if (s?.deadline && new Date() > new Date(s.deadline)) {
     console.warn('Deadline passed, pick rejected');
     return;
   }
+  const { data: prev } = await db.from('picks').select('winner, games').eq('user_id', currentUser.id).eq('series_id', seriesId).maybeSingle();
   await db.from('picks').upsert({
     user_id: currentUser.id, series_id: seriesId,
     winner: pick.winner, games: pick.games, updated_at: new Date().toISOString()
   }, { onConflict: 'user_id,series_id' });
+  await db.from('pick_logs').insert({
+    user_id: currentUser.id, series_id: seriesId,
+    old_winner: prev?.winner || null, old_games: prev?.games || null,
+    new_winner: pick.winner, new_games: pick.games,
+    changed_at: new Date().toISOString(), changed_by_admin: false
+  });
 }
 
 // ---- TABLE ----
@@ -1040,12 +1046,18 @@ async function adminEditPick() {
   if (!userId || !winner) { msgEl.innerHTML = '<div class="admin-error">נא לבחור משתמש וקבוצה</div>'; return; }
 
   // Save pick
+  const { data: prevAdmin } = await db.from('picks').select('winner, games').eq('user_id', userId).eq('series_id', seriesId).maybeSingle();
   const { error } = await db.from('picks').upsert({
     user_id: userId, series_id: seriesId,
     winner, games, updated_at: new Date().toISOString()
   }, { onConflict: 'user_id,series_id' });
   if (error) { msgEl.innerHTML = `<div class="admin-error">שגיאה: ${error.message}</div>`; return; }
-
+  await db.from('pick_logs').insert({
+    user_id: userId, series_id: seriesId,
+    old_winner: prevAdmin?.winner || null, old_games: prevAdmin?.games || null,
+    new_winner: winner, new_games: games,
+    changed_at: new Date().toISOString(), changed_by_admin: true
+  });
   msgEl.innerHTML = '<div class="admin-success">✓ הימור עודכן!</div>';
 }
 
@@ -1060,6 +1072,34 @@ async function adminSetChampPick() {
   }, { onConflict: 'user_id,series_id' });
   if (error) { msgEl.innerHTML = `<div class="admin-error">שגיאה: ${error.message}</div>`; return; }
   msgEl.innerHTML = `<div class="admin-success">✓ ${team} נקבעה כאלופה!</div>`;
+}
+
+async function showLogs() {
+  const container = document.getElementById('logs-container');
+  container.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:8px">טוען...</div>';
+  const { data: logs } = await db.from('pick_logs').select('*').order('changed_at', { ascending: false }).limit(60);
+  const { data: allUsers } = await db.from('users').select('id, nickname');
+  const usersMap = {};
+  if (allUsers) allUsers.forEach(u => { usersMap[u.id] = u.nickname; });
+  const seriesMap = {};
+  seriesData.forEach(s => { seriesMap[s.id] = s.name; });
+  if (!logs?.length) { container.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:8px">אין לוגים עדיין</div>'; return; }
+  container.innerHTML = logs.map(l => {
+    const name = usersMap[l.user_id] || '?';
+    const series = seriesMap[l.series_id] || l.series_id;
+    const time = new Date(l.changed_at).toLocaleString('he-IL', { timeZone: 'Asia/Jerusalem', day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+    const oldStr = l.old_winner ? `${l.old_winner}${l.old_games ? ' ('+l.old_games+')' : ''}` : 'חדש';
+    const newStr = `${l.new_winner}${l.new_games ? ' ('+l.new_games+')' : ''}`;
+    const adminBadge = l.changed_by_admin ? ' <span style="color:var(--gold)">⚙️</span>' : '';
+    return `<div style="border-bottom:1px solid var(--border);padding:8px 0;font-size:12px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:2px">
+        <span style="font-weight:700">${name}${adminBadge}</span>
+        <span style="color:var(--muted)">${time}</span>
+      </div>
+      <div style="color:var(--muted);font-size:11px">${series}</div>
+      <div style="margin-top:2px">${oldStr} <span style="color:var(--accent)">→</span> <span style="color:var(--green)">${newStr}</span></div>
+    </div>`;
+  }).join('');
 }
 
 function fillEditFields() {
